@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: postgres
+{{ include "common.labels" . | indent 4 }}
+  name: postgres
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - image: {{ .Values.postgres.image }}
+          name: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: homerSeven
+            - name: POSTGRES_USER
+              value: root
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: postgres-claim
+      restartPolicy: Always
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-claim
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: {{ .Values.postgres.storage }}

@@ -1,0 +1,19 @@
+grafana: 
+  image: grafana/grafana-oss:latest 
+  hostname:
+  storage: 2Gi
+heplifyServer: 
+  image: sipcapture/heplify-server:master
+influxdb: 
+  image: influxdb:1.8
+  loglevel: info
+  storage: 20Gi
+homer: 
+  image: sipcapture/webapp:latest
+  hostname:
+postgres: 
+  image: postgres:11-alpine
+  storage: 30Gi 
+telegraf: 
+  image: telegraf:1.19
+

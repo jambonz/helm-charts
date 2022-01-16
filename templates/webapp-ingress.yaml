@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapp
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "common.labels" . | indent 4 }}
+spec:
+  rules:
+    - host: {{ required "hostname for the web port" .Values.webapp.hostname }}
+      http:
+        paths:
+        - backend:
+            service:
+              name: webapp
+              port: 
+                number: 3001
+          path: /
+          pathType: Prefix

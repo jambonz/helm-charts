@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: api-server
+{{ include "common.labels" . | indent 4 }}
+  name: api-server
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  ports:
+    - name: "api-server"
+      port:  {{ .Values.api.httpPort }}
+      targetPort:  {{ .Values.api.httpPort }}
+  selector:
+    app: api-server

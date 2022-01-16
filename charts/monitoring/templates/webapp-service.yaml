@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: homer-webapp
+{{ include "common.labels" . | indent 4 }}
+  name: homer-webapp
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  ports:
+    - name: homer-webapp
+      port: 80
+      targetPort: 80
+  type: NodePort
+  selector:
+    app: homer-webapp

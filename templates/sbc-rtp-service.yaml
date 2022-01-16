@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rtpengine-ng
+{{ include "common.labels" . | indent 4 }}
+  name: rtpengine-ng
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  ports:
+    - name: rtpengine-ng
+      port: 22222
+      protocol: TCP
+      targetPort: 22222
+  selector:
+    app: jambonz-sbc-rtp
+  clusterIP: None

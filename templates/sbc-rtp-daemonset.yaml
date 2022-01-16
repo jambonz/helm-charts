@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: {{ .Release.Namespace | quote }}
+  name: jambonz-sbc-rtp
+  labels:
+    app: jambonz-sbc-rtp
+{{ include "common.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: jambonz-sbc-rtp
+  template:
+    metadata:
+      labels:
+        app: jambonz-sbc-rtp
+    spec:
+      nodeSelector:
+        {{ .Values.sbc.rtp.nodeSelector.label }}: {{.Values.sbc.rtp.nodeSelector.value }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      tolerations:
+        - key: {{ .Values.sbc.rtp.toleration | quote }}
+          operator: "Exists"
+          effect: "NoSchedule"
+      initContainers:
+        - image: kanisterio/mysql-sidecar:0.40.0
+          name: db-create-wait
+          command:
+            - sh 
+            - -c 
+            - |
+              until mysql -u {{ .Values.mysql.user }} -D {{ .Values.mysql.database }} -h mysql.{{ default .Release.Namespace .Values.global.db.namespace }} -p${MYSQL_PASSWORD} --protocol=tcp -e "select count(*) from accounts";
+              do 
+                sleep 5
+              done
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: MYSQL_PASSWORD
+      containers:
+        - name: rtpengine-sidecar
+          image: {{ .Values.rtpengine.sidecarImage }}
+          imagePullPolicy:  {{ .Values.rtpengine.sidecarImagePullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: K8S 
+              value: "1"
+            - name: JAMBONES_REDIS_HOST
+              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}
+            - name: RTPENGINE_DTMF_LOG_PORT
+              value: {{ .Values.rtpengine.dtmfLogPort | quote }}
+        - name: rtpengine 
+          image: {{ .Values.rtpengine.image }}
+          imagePullPolicy: {{ .Values.rtpengine.imagePullPolicy }}
+          args: 
+            - rtpengine
+            - --listen-udp=22222
+            - --listen-http=22222
+            - --homer
+            - heplify-server.{{ default .Release.Namespace .Values.global.monitoring.namespace }}:9060
+            - --homer-protocol
+            - udp
+            - --homer-id
+            - {{ .Values.rtpengine.homerId | quote }}
+          env:
+            - name: DRACHTIO_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: DRACHTIO_SECRET
+          ports:
+            - containerPort: 22222
+              protocol: TCP
+      restartPolicy: Always

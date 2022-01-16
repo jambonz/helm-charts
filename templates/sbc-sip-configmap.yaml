@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.Namespace | quote }}
+  name: jambonz-sbc-sip-conf
+  labels:
+{{ include "common.labels" . | indent 4 }}
+data:
+  drachtio.conf.xml: |
+    <drachtio>
+
+        <!-- udp port to listen on for client connections and shared secret used to authenticate clients -->
+        <admin port="9022" secret="cymru">0.0.0.0</admin>
+        <request-handlers>
+          <request-handler sip-method="INVITE" http-method="POST">http://sbc-call-router:3000</request-handler>
+          <request-handler sip-method="REGISTER">http://sbc-call-router:3000</request-handler>
+        </request-handlers>
+        <sip>
+          <udp-mtu>4096</udp-mtu>
+        </sip>
+
+        <cdrs>false</cdrs>
+
+        <logging>
+            <sofia-loglevel>3</sofia-loglevel>
+            <loglevel>info</loglevel>
+        </logging>
+
+    </drachtio>

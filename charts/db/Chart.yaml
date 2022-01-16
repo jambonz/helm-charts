@@ -1,0 +1,17 @@
+apiVersion: v2
+name: db
+version: 0.1.0
+description: database elements (mysql+redis) for a jambonz CPaaS system
+home: https://jambonz.org
+keywords:
+  - voip 
+  - cpaas 
+  - webRTC 
+  - sip 
+  - rtp
+maintainers: 
+  - name: Dave Horton
+    email: daveh@drachtio.org
+sources: 
+  - https://github.com/jambonz/helm-charts
+  - https://github.com/jambonz/jambonz-infrastructure

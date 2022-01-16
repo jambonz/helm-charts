@@ -1,0 +1,9 @@
+dependencies:
+- name: db
+  repository: ""
+  version: 0.1.0
+- name: monitoring
+  repository: ""
+  version: 0.1.0
+digest: sha256:4551e6eee2b526ec5443f06e2c15d391c8ec1fec5a6c377011ed94f917e7a103
+generated: "2022-01-13T13:31:13.459101-05:00"

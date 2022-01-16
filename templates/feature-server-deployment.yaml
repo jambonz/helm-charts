@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feature-server
+  labels:
+    app: feature-server
+{{ include "common.labels" . | indent 4 }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  selector:
+    matchLabels:
+      app: feature-server
+  template:
+    metadata:
+      labels:
+        app: feature-server
+    spec:
+      initContainers:
+        - image: kanisterio/mysql-sidecar:0.40.0
+          name: db-create-wait
+          command:
+            - sh 
+            - -c 
+            - |
+              until mysql -u {{ .Values.mysql.user }} -D {{ .Values.mysql.database }} -h mysql.{{ default .Release.Namespace .Values.global.db.namespace }} -p${MYSQL_PASSWORD} --protocol=tcp -e "select count(*) from accounts";
+              do 
+                sleep 5
+              done
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: MYSQL_PASSWORD
+      containers:
+        - name: drachtio
+          image: {{ .Values.drachtio.image }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.drachtio.imagePullPolicy }}
+          env: 
+            - name: CLOUD 
+              value: {{ required "cloud provider name"  .Values.cloud | quote }}
+          lifecycle:
+            preStop:
+              exec:
+                command: [
+                  "/bin/sh",
+                  "-c",
+                  "while $(curl --output /dev/null --silent --head --fail-early http://127.0.0.1:3000); do printf '.'; sleep 10; done"
+                ]
+          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp,tcp']
+          ports:
+            - containerPort: 9022
+        - name: freeswitch
+          image: {{ .Values.freeswitch.image }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.freeswitch.imagePullPolicy }}
+          lifecycle:
+            preStop:
+              exec:
+                command: [
+                  "/bin/sh",
+                  "-c",
+                  "while $(curl --output /dev/null --silent --head --fail-early http://127.0.0.1:3000); do printf '.'; sleep 10; done"
+                ]
+          volumeMounts:
+            - mountPath: /tmp 
+              name: temp-audio-volume
+          ports:
+            - containerPort: 8081
+        - name: feature-server 
+          image: {{ .Values.featureServer.image }}
+          imagePullPolicy: {{ .Values.featureServer.imagePullPolicy }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "/opt/app/bin/k8s-pre-stop-hook.js"]
+          volumeMounts:
+            - mountPath: /tmp 
+              name: temp-audio-volume
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: HTTP_PORT
+              value: {{ .Values.featureServer.httpPort | quote }}
+            - name: K8S 
+              value: "1"
+            - name: JAMBONES_TIME_SERIES_HOST 
+              value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: DRACHTIO_HOST
+              value: 127.0.0.1 
+            - name: DRACHTIO_PORT 
+              value: "9022"
+            - name: JAMBONES_FREESWITCH
+              value: {{ .Values.featureServer.freeswitchConnection | quote }}
+            - name: JAMBONES_TIME_SERIES_HOST 
+              value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: ENABLE_METRICS
+              value: {{ default "0" .Values.stats.enabled  | quote }}
+            {{- if .Values.stats.enabled }}
+            - name: STATS_HOST
+              value: {{ .Values.stats.host }}.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: STATS_PORT
+              value: {{ .Values.stats.port  | quote }}
+            - name: STATS_PROTOCOL
+              value: {{ .Values.stats.protocol }}
+            - name: STATS_TELEGRAF
+              value: "1"
+            - name: STATS_SAMPLE_RATE
+              value:  {{ .Values.stats.sampleRate | quote }}
+            {{- end }}
+            - name: JAMBONES_REDIS_HOST
+              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}
+            - name: JAMBONES_MYSQL_DATABASE
+              value: {{ .Values.mysql.database }}
+            - name: JAMBONES_MYSQL_HOST
+              value: mysql.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_MYSQL_USER
+              value: {{ .Values.mysql.user }}
+            - name: JAMBONES_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: MYSQL_PASSWORD
+            - name: DRACHTIO_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: DRACHTIO_SECRET
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: JWT_SECRET
+          ports:
+            - containerPort: 3000
+          resources: {}
+      restartPolicy: Always
+      volumes:
+      - name: temp-audio-volume
+        emptyDir: {}
+      terminationGracePeriodSeconds: 900

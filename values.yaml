@@ -1,0 +1,145 @@
+global:
+  # if defined, create and/or reference db and monitoring services in the specified namespace;
+  # otherwise they create and/or referenced them in whatever the .Release namespace is
+  dbNamespace: 
+  monitoringNamespace:
+
+db: 
+  # if true, create the db subchart
+  enabled: true
+monitoring: 
+  # if true, create the monitoring subchart
+  enabled: true 
+
+# (required) name of cloud provider: azure, aws, digitalocean, gcp, or none 
+cloud:
+
+# basic information that applies to all jambonz Node.js app
+jambonz: 
+  # a short identifier for the cluster, needed if multiple jambonz clusters will share the same redis
+  clusterId: 
+  # jambonz loglevel, should be either info or debug
+  loglevel: info
+
+# this specifies the node pools into which the SBC sip and rtp elements will be placed
+# these have to be in special nodepools that use host network binding due to the nature
+# of sip signaling and the current lack of support for sip in ingress controllers
+sbc: 
+  sip: 
+    nodeSelector: 
+      label: voip-environment 
+      value: sip
+    toleration: sip
+  rtp: 
+    nodeSelector: 
+      label: voip-environment 
+      value: rtp
+    toleration: rtp
+    
+# information used by the Node.js apps to write statsd to a telegraf listening instance
+stats: 
+  enabled: "1"
+  host: telegraf
+  port: "8125"
+  protocol: tcp 
+  telegraf: "1"
+  sampleRate: "1"
+
+# configuration information for rtpengine
+rtpengine: 
+  image: jambonz/rtpengine:latest 
+  imagePullPolicy: Always
+  sidecarImage: jambonz/rtpengine-sidecar:latest
+  sidecarImagePullPolicy: Always
+  dtmfLogPort:  "22223"
+  loglevel: "5"
+  homerId: "11"
+
+# used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
+drachtio: 
+  image: drachtio/drachtio-server:latest
+  imagePullPolicy: Always
+  host: "127.0.0.1"
+  port: "9022"
+  homerId: "10"
+
+# freeswitch configuration
+freeswitch: 
+  image: drachtio/drachtio-freeswitch-mrf:latest
+  imagePullPolicy: Always
+
+# mysql configuration used by Node.js app that need to connect
+mysql: 
+  image: mysql:5.7
+  host: mysql 
+  database: jambones
+  user: jambones 
+  storage: 10Gi
+
+# redis configuration used by Node.js app that need to connect
+redis: 
+  image: redis:alpine
+  host: redis 
+  port: "6379"
+
+# configuration for jambonz-api-server
+api: 
+  image: jambonz/jambonz-api-server:latest 
+  imagePullPolicy: Always
+  httpPort: "3000"
+  # (required) hostname for the jambonz port ingress
+  hostname:
+
+# jambonz-webapp configuration
+webapp: 
+  image: jambonz/webapp:latest
+  imagePullPolicy: Always
+  
+  # (required) hostname for the jambonz port ingress
+  hostname: 
+
+# sbc-options-handler configuration
+sbcOptionsHandler: 
+  image: jambonz/sbc-options-handler:latest
+  imagePullPolicy: Always
+
+# sbc-inbound configuration
+sbcInbound: 
+  image: jambonz/sbc-inbound:latest
+  imagePullPolicy: Always
+  drachtioPort: "4000"
+
+# sbc-outbound configuration
+sbcOutbound: 
+  image: jambonz/sbc-outbound:latest
+  imagePullPolicy: Always
+  drachtioPort: "4000"
+
+# sbc-registrar configuration
+sbcRegistrar: 
+  image: jambonz/sbc-registrar:latest
+  imagePullPolicy: Always
+  drachtioPort: "4000"
+
+# sbc-call-router configuration
+sbcCallRouter: 
+  image: jambonz/sbc-call-router:latest
+  imagePullPolicy: Always
+  httpPort: "3000"
+
+# feature-server configuration
+featureServer: 
+  image: jambonz/feature-server:latest
+  imagePullPolicy: Always
+  httpPort: "3000"
+  drachtioConnection: "localhost:9022:cymru"
+  freeswitchConnection: "localhost:8021:JambonzR0ck$"
+
+# sbc-sip configuration
+sbcSip: 
+  loglevel: info 
+  sofiaLoglevel: "3"
+
+# sidecar to wait for database up
+dbWaiter:
+  image: d3fk/kubectl:v1.18

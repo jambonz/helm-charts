@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webapp
+{{ include "common.labels" . | indent 4 }}
+  name: webapp
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - env:
+            - name: NODE_ENV
+              value: production
+            - name: REACT_APP_API_BASE_URL
+              value: http://{{ .Values.api.hostname }}/v1
+            - name: NODE_OPTIONS
+              value: '--openssl-legacy-provider'
+          image: jambonz/webapp:latest
+          name: webapp
+          ports:
+            - containerPort: 3001
+          resources: {}
+      restartPolicy: Always

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sbc-call-router
+{{ include "common.labels" . | indent 4 }}
+  name: sbc-call-router
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  ports:
+    - name: app
+      port: {{ .Values.sbcCallRouter.httpPort }}
+      protocol: TCP
+      targetPort: {{ .Values.sbcCallRouter.httpPort }}
+  selector:
+    app: sbc-call-router
+  clusterIP: None
