@@ -60,7 +60,7 @@ This chart provides the option of installing everything into a single namespace,
 - `monitoring`: for the monitoring workloads
 - `jambonz`: for the core jambonz call, media, and api processing.
 
-If you don't want to install everything into a single namespace, then set the `global.dbNamespace` and `global.monitoringNamespace`
+If you don't want to install everything into a single namespace, then set the `global.dbNamespace` and `global.monitoringNamespace` in values.yaml to the namespaces that you want to use for these sub-charts.
 
 ## Installing the chart
 
@@ -98,7 +98,7 @@ Note that all of the above command line values are required variables.
 
 Once you have installed the helm chart for the first, it will take a bit for all components to be downloaded, installed and transition to the running state.  This is because the mysql database schema will be created and seeded with initial data, any many of the Pods will wait for the database to become available (via an initContainer) before starting their containers.
 
-Once the system is up and running, you will want to query the 4 ingress controllers to the the IPs that have been assigned to them.
+Once the system is up and running, you will want to query the 4 ingress controllers to view the the IP addresses that have been assigned.
 
 ```bash
 $ kubectl -n jambonz get ingress
@@ -112,7 +112,7 @@ grafana        <none>   grafana.example.com   35.201.68.117   80      6m10s
 homer-webapp   <none>   homer.example.com     35.241.2.62     80      6m10s
 ```
 
-Once you have done this you will want to create associated DNS records using your DNS provider.
+Once you have done this you will want to create associated the DNS records in your DNS provider so that you can access these portals.
 
 ## Uninstalling the chart
 
