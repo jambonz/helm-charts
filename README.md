@@ -1,6 +1,20 @@
 # jambonz
 [jambonz](https://jambonz.org) is an open-source CPaaS (Communication Platform as a Service) specifically designed for Communication Service Providers.  
 
+To add this Helm chart repository to your Helm client:
+
+```bash
+helm repo add jambonz https://jambonz.github.io/helm-charts/
+```
+
+Having installed it, you can list its charts, of which there is just one:
+
+```bash
+$ helm search repo jambonz
+NAME           	CHART VERSION	APP VERSION	DESCRIPTION
+jambonz/jambonz	0.1.0        	           	open source CPaaS for communication service pro...
+```
+
 ## Introduction
 This chart bootstraps a jambonz deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
@@ -63,7 +77,8 @@ The cloud provider where the Kubernetes cluster is running (google, in this case
  --set "monitoring.homer.hostname=homer.example.com" \
 --set "webapp.hostname=portal.example.com" \
 --set "api.hostname=api.example.com" \
---set cloud=gcp .
+--set cloud=gcp \
+jambonz/jambonz
  ```
 
  Installing the chart into a single namespace:
@@ -75,7 +90,8 @@ The cloud provider where the Kubernetes cluster is running (google, in this case
  --set "monitoring.homer.hostname=homer.example.com" \
 --set "webapp.hostname=portal.example.com" \
 --set "api.hostname=api.example.com" \
---set cloud=gcp .
+--set cloud=gcp \
+jambonz/jambonz
 ```
 
 Note that all of the above command line values are required variables.
@@ -165,6 +181,7 @@ helm uninstall -n <namespace> <release-name>
 |sbcSip.loglevel|drachtio loglevel in sbc sip container, should be info or debug|"info"|
 |sbcSip.sofiaLogLevel|sofia-sip log level for drachtio in sbc sip container, should be 1-9|"3|
 |dbWaiter.image|image of sidecar mysql client app to use for testing database readiness|d3fk/kubectl:v1.18|
+
 
 
 
