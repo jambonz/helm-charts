@@ -65,6 +65,8 @@ spec:
               value: "1"
             - name: CLOUD 
               value: {{ required "cloud provider name" .Values.cloud | quote }}
+            - name: IMDSv2 
+              value: {{ .Values.awsUseIMDSv2 | quote }}
           ports:
             - containerPort: 9022
               protocol: TCP
@@ -79,12 +81,14 @@ spec:
               subPath: drachtio.conf.xml
         - name: sbc-options-handler
           image: {{ .Values.sbcOptionsHandler.image }}
-          imagePullPolicy: Always 
+          imagePullPolicy: {{ default "IfNotPresent" .Values.sbcOptionsHandler.imagePullPolicy }} 
           env:
             - name: NODE_ENV
               value: production
             - name: K8S 
               value: "1"
+            - name: JAMBONES_LOGLEVEL
+              value: info
             - name: JAMBONES_MYSQL_DATABASE
               value: {{ .Values.mysql.database }}
             - name: JAMBONES_MYSQL_HOST
@@ -103,6 +107,46 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: DRACHTIO_SECRET
+        - name: smpp
+          image: {{ .Values.smpp.image }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.smpp.imagePullPolicy }} 
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: JAMBONES_LOGLEVEL
+              value: info
+            - name: K8S 
+              value: "1"
+            - name: HTTP_PORT 
+              value: "80"
+            - name: AVOID_UDH 
+              value: "1"
+            - name: JAMBONES_REDIS_HOST
+              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}            
+            - name: JAMBONES_MYSQL_DATABASE
+              value: {{ .Values.mysql.database }}
+            - name: JAMBONES_MYSQL_HOST
+              value: mysql.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_MYSQL_USER
+              value: {{ .Values.mysql.user }}
+            - name: JAMBONES_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: MYSQL_PASSWORD
+            - name: DRACHTIO_HOST
+              value: 127.0.0.1
+            - name: DRACHTIO_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: DRACHTIO_SECRET
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
       restartPolicy: Always
       volumes:
       - name: jambonz-sbc-sip-conf

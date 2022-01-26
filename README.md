@@ -136,7 +136,6 @@ helm uninstall -n <namespace> <release-name>
 |monitoring.enabled|if true, install the monitoring sub-chart|true|
 |cloud|(required) name of cloud provider, must be one of azure, aws, digitalocean, gcp, or none|""|
 |jambonz.clusterId|a short identifier for the cluster|""|
-|jambonz.loglevel|jambonz loglevel, should be either info or debug|"info"|
 |sbc.sip.nodeSelector.label|label name used to select sip node pool|"voip-environment"|
 |sbc.sip.nodeSelector.value|label value used to select sip node pool|"sip"|
 |sbc.sip.toleration|taint assigned to sip node pool|"sip"|

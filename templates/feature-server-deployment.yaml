@@ -39,6 +39,8 @@ spec:
           env: 
             - name: CLOUD 
               value: {{ required "cloud provider name"  .Values.cloud | quote }}
+            - name: IMDSv2 
+              value: {{ .Values.awsUseIMDSv2 }}
           lifecycle:
             preStop:
               exec:
@@ -47,12 +49,15 @@ spec:
                   "-c",
                   "while $(curl --output /dev/null --silent --head --fail-early http://127.0.0.1:3000); do printf '.'; sleep 10; done"
                 ]
-          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp,tcp']
+          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp']
           ports:
             - containerPort: 9022
         - name: freeswitch
           image: {{ .Values.freeswitch.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.freeswitch.imagePullPolicy }}
+          args: 
+            - freeswitch 
+            - --codec-answer-generous
           lifecycle:
             preStop:
               exec:
@@ -85,6 +90,8 @@ spec:
               value: production
             - name: HTTP_PORT
               value: {{ .Values.featureServer.httpPort | quote }}
+            - name: JAMBONES_LOGLEVEL
+              value: info
             - name: K8S 
               value: "1"
             - name: JAMBONES_TIME_SERIES_HOST 

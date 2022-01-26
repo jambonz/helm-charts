@@ -14,16 +14,22 @@ monitoring:
 # (required) name of cloud provider: azure, aws, digitalocean, gcp, or none 
 cloud:
 
+# set this to "1" if you are deploying on AWS and you are using IMDSv2
+awsUseIMDSv2:
+
 # basic information that applies to all jambonz Node.js app
 jambonz: 
   # a short identifier for the cluster, needed if multiple jambonz clusters will share the same redis
   clusterId: 
-  # jambonz loglevel, should be either info or debug
-  loglevel: info
 
-# this specifies the node pools into which the SBC sip and rtp elements will be placed
-# these have to be in special nodepools that use host network binding due to the nature
-# of sip signaling and the current lack of support for sip in ingress controllers
+# these values direct which nodepool the SBC sip and rtp pods will be placed in.
+# these pods have to be in special nodepools that use host network binding due to the nature
+# of sip signaling and the current lack of support for sip in ingress controllers.
+#
+#   Note: if you want to put sip and rtp into a single nodepool (e.g. to save cost on a smaller deployment)
+#   then set both labels below to the same value and both tolerations below to the same value  
+#   and use those values when creating your single edge-facing nodepool when you spin up the cluster.
+#   (But, for production deployments, separate nodepools are recommended for sip and rtp, and this is the default setup below).
 sbc: 
   sip: 
     nodeSelector: 
@@ -52,13 +58,12 @@ rtpengine:
   sidecarImage: jambonz/rtpengine-sidecar:latest
   sidecarImagePullPolicy: Always
   dtmfLogPort:  "22223"
-  loglevel: "5"
+  loglevel: "7"
   homerId: "11"
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
   image: drachtio/drachtio-server:latest
-  imagePullPolicy: Always
   host: "127.0.0.1"
   port: "9022"
   homerId: "10"
@@ -97,6 +102,11 @@ webapp:
   
   # (required) hostname for the jambonz port ingress
   hostname: 
+
+# 
+smpp:
+  image: jambonz/smpp-esme:latest
+  imagePullPolicy: Always
 
 # sbc-options-handler configuration
 sbcOptionsHandler: 

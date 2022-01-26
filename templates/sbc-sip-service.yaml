@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: smpp
+{{ include "common.labels" . | indent 4 }}
+  name: smpp
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  ports:
+    - name: smpp
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: smpp
+  clusterIP: None

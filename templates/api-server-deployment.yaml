@@ -42,8 +42,16 @@ spec:
               value: production
             - name: HTTP_PORT
               value: {{ .Values.api.httpPort | quote }}
+            - name: JAMBONES_LOGLEVEL
+              value: info
             - name: JAMBONES_TIME_SERIES_HOST 
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: HOMER_BASE_URL
+              value: http://homer-webapp.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: HOMER_USERNAME
+              value: admin
+            - name: HOMER_PASSWORD
+              value: sipcapture
             - name: ENABLE_METRICS
               value: {{ default "0" .Values.stats.enabled  | quote }}
             {{- if .Values.stats.enabled }}

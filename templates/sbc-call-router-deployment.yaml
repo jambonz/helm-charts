@@ -24,6 +24,8 @@ spec:
               value: production
             - name: K8S 
               value: "1"
+            - name: JAMBONES_LOGLEVEL
+              value: info
             - name: K8S_SBC_INBOUND_SERVICE_NAME
               value: sbc-inbound:4000
             - name: K8S_SBC_OUTBOUND_SERVICE_NAME

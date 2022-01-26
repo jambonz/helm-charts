@@ -55,6 +55,8 @@ spec:
               value: production
             - name: K8S 
               value: "1"
+            - name: JAMBONES_LOGLEVEL
+              value: info
             - name: DRACHTIO_PORT
               value: {{ .Values.sbcOutbound.drachtioPort | quote }}
             - name: DTMF_LISTEN_PORT

@@ -41,6 +41,8 @@ spec:
               value: production
             - name: K8S 
               value: "1"
+            - name: JAMBONES_LOGLEVEL
+              value: info
             - name: JAMBONES_TIME_SERIES_HOST 
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: ENABLE_METRICS
