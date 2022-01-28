@@ -53,9 +53,9 @@ stats:
 
 # configuration information for rtpengine
 rtpengine: 
-  image: jambonz/rtpengine:latest 
+  image: jambonz/rtpengine:0.1.0 
   imagePullPolicy: Always
-  sidecarImage: jambonz/rtpengine-sidecar:latest
+  sidecarImage: jambonz/rtpengine-sidecar:0.7.2
   sidecarImagePullPolicy: Always
   dtmfLogPort:  "22223"
   loglevel: "7"
@@ -63,14 +63,14 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:latest
+  image: drachtio/drachtio-server:0.8.14
   host: "127.0.0.1"
   port: "9022"
   homerId: "10"
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:latest
+  image: drachtio/drachtio-freeswitch-mrf:0.4.0
   imagePullPolicy: Always
 
 # mysql configuration used by Node.js app that need to connect
@@ -89,7 +89,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/jambonz-api-server:latest 
+  image: jambonz/api-server:0.7.2 
   imagePullPolicy: Always
   httpPort: "3000"
   # (required) hostname for the jambonz port ingress
@@ -97,7 +97,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:latest
+  image: jambonz/webapp:0.7.2
   imagePullPolicy: Always
   
   # (required) hostname for the jambonz port ingress
@@ -105,41 +105,41 @@ webapp:
 
 # 
 smpp:
-  image: jambonz/smpp-esme:latest
+  image: jambonz/smpp-esme:0.7.2
   imagePullPolicy: Always
 
 # sbc-options-handler configuration
 sbcOptionsHandler: 
-  image: jambonz/sbc-options-handler:latest
+  image: jambonz/sbc-options-handler:0.7.2
   imagePullPolicy: Always
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:latest
+  image: jambonz/sbc-inbound:0.7.2
   imagePullPolicy: Always
   drachtioPort: "4000"
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:latest
+  image: jambonz/sbc-outbound:0.7.2
   imagePullPolicy: Always
   drachtioPort: "4000"
 
 # sbc-registrar configuration
 sbcRegistrar: 
-  image: jambonz/sbc-registrar:latest
+  image: jambonz/sbc-registrar:0.7.2
   imagePullPolicy: Always
   drachtioPort: "4000"
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:latest
+  image: jambonz/sbc-call-router:0.7.2
   imagePullPolicy: Always
   httpPort: "3000"
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:latest
+  image: jambonz/feature-server:0.7.2
   imagePullPolicy: Always
   httpPort: "3000"
   drachtioConnection: "localhost:9022:cymru"

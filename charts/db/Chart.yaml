@@ -1,6 +1,6 @@
 apiVersion: v2
 name: db
-version: 0.1.0
+version: 0.1.1
 description: database elements (mysql+redis) for a jambonz CPaaS system
 home: https://jambonz.org
 keywords:
