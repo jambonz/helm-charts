@@ -1324,14 +1324,20 @@ data:
           },
           "id": 35,
           "options": {
+            "displayLabels": [
+              "percent"
+            ],
             "legend": {
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "values": [
+                "value"
+              ]
             },
             "pieType": "pie",
             "reduceOptions": {
               "calcs": [
-                "lastNotNull"
+                "count"
               ],
               "fields": "",
               "values": false
@@ -1383,10 +1389,11 @@ data:
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "count"
                   }
                 ]
-              ]
+              ],
+              "tags": []
             }
           ],
           "title": "Inbound Response Codes",
