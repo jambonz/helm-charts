@@ -1,0 +1,56 @@
+{{- if .Values.global.kong.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kong-gateway-monitoring
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/strip-path: "true"
+    konghq.com/plugins: ratelimit
+    #konghq.com/protocols: https
+    #konghq.com/https-redirect-status-code: "301"
+  labels:
+{{ include "common.labels" . | indent 4 }}
+spec:
+  rules:
+    - http:
+        paths:
+        {{- if .Values.global.kong.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /grafana
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+      {{- if .Values.global.kong.useHostnames }}
+      host: {{ required "hostname for Grafana" .Values.grafana.hostname }}
+      {{- end}}
+      
+    - http:
+        paths:
+        {{- if .Values.global.kong.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /homer
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: homer-webapp
+                port:
+                  number: 80
+      {{- if .Values.global.kong.useHostnames }}
+      host: {{ required "hostname for Homer" .Values.homer.hostname }}
+      {{- end}}
+
+{{- end}}
+      
+          
+          
+
+

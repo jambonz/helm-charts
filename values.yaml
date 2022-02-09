@@ -3,6 +3,9 @@ global:
   # otherwise they create and/or referenced them in whatever the .Release namespace is
   dbNamespace: 
   monitoringNamespace:
+  kong:
+    enabled: true
+    useHostnames: true 
 
 db: 
   # if true, create the db subchart
