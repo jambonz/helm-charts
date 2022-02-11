@@ -94,6 +94,8 @@ spec:
               value: info
             - name: K8S 
               value: "1"
+            - name: JAMBONES_API_BASE_URL
+              value: http://{{ .Values.api.hostname }}/v1
             - name: JAMBONES_TIME_SERIES_HOST 
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: DRACHTIO_HOST

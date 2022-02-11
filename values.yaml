@@ -55,7 +55,7 @@ stats:
 rtpengine: 
   image: jambonz/rtpengine:0.1.0 
   imagePullPolicy: Always
-  sidecarImage: jambonz/rtpengine-sidecar:0.7.2
+  sidecarImage: jambonz/rtpengine-sidecar:0.7.3
   sidecarImagePullPolicy: Always
   dtmfLogPort:  "22223"
   loglevel: "7"
@@ -70,7 +70,7 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.0
+  image: drachtio/drachtio-freeswitch-mrf:0.4.1
   imagePullPolicy: Always
 
 # mysql configuration used by Node.js app that need to connect
@@ -89,7 +89,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.7.2 
+  image: jambonz/api-server:0.7.3 
   imagePullPolicy: Always
   httpPort: "3000"
   # (required) hostname for the jambonz port ingress
@@ -97,7 +97,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.7.2
+  image: jambonz/webapp:0.7.3
   imagePullPolicy: Always
   
   # (required) hostname for the jambonz port ingress
@@ -105,41 +105,41 @@ webapp:
 
 # 
 smpp:
-  image: jambonz/smpp-esme:0.7.2
+  image: jambonz/smpp-esme:0.7.3
   imagePullPolicy: Always
 
 # sbc-options-handler configuration
 sbcOptionsHandler: 
-  image: jambonz/sbc-options-handler:0.7.2
+  image: jambonz/sbc-options-handler:0.7.3
   imagePullPolicy: Always
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.7.2
+  image: jambonz/sbc-inbound:0.7.3
   imagePullPolicy: Always
   drachtioPort: "4000"
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.7.2
+  image: jambonz/sbc-outbound:0.7.3
   imagePullPolicy: Always
   drachtioPort: "4000"
 
 # sbc-registrar configuration
 sbcRegistrar: 
-  image: jambonz/sbc-registrar:0.7.2
+  image: jambonz/sbc-registrar:0.7.3
   imagePullPolicy: Always
   drachtioPort: "4000"
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.7.2
+  image: jambonz/sbc-call-router:0.7.3
   imagePullPolicy: Always
   httpPort: "3000"
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.7.2
+  image: jambonz/feature-server:0.7.3
   imagePullPolicy: Always
   httpPort: "3000"
   drachtioConnection: "localhost:9022:cymru"
