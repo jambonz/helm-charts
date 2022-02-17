@@ -89,6 +89,10 @@ spec:
               value: "1"
             - name: JAMBONES_LOGLEVEL
               value: info
+            - name: JAMBONES_REDIS_HOST
+              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}
             - name: JAMBONES_MYSQL_DATABASE
               value: {{ .Values.mysql.database }}
             - name: JAMBONES_MYSQL_HOST
