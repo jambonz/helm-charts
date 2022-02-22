@@ -49,7 +49,7 @@ spec:
                   "-c",
                   "while $(curl --output /dev/null --silent --head --fail-early http://127.0.0.1:3000); do printf '.'; sleep 10; done"
                 ]
-          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp']
+          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp', '--loglevel', 'info', 'sofia-loglevel', '3']
           ports:
             - containerPort: 9022
         - name: freeswitch

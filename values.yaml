@@ -58,7 +58,7 @@ rtpengine:
   sidecarImage: jambonz/rtpengine-sidecar:0.7.3
   sidecarImagePullPolicy: Always
   dtmfLogPort:  "22223"
-  loglevel: "7"
+  loglevel: "5"
   homerId: "11"
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
