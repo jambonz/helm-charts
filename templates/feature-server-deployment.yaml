@@ -15,6 +15,13 @@ spec:
       labels:
         app: feature-server
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: feature-server    
       initContainers:
         - image: kanisterio/mysql-sidecar:0.40.0
           name: db-create-wait
