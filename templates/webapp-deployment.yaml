@@ -24,7 +24,7 @@ spec:
               value: http://{{ .Values.api.hostname }}/v1
             - name: NODE_OPTIONS
               value: '--openssl-legacy-provider'
-          image: jambonz/webapp:latest
+          image:  {{ .Values.webapp.image }}
           name: webapp
           ports:
             - containerPort: 3001

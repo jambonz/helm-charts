@@ -42,7 +42,7 @@ spec:
                   key: MYSQL_PASSWORD
       containers:
         - name: drachtio
-          image: drachtio/drachtio-server:latest
+          image: {{ .Values.drachtio.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.drachtio.imagePullPolicy }}
           args: 
             - drachtio
