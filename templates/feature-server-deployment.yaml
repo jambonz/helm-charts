@@ -48,6 +48,8 @@ spec:
               value: {{ required "cloud provider name"  .Values.cloud | quote }}
             - name: IMDSv2 
               value: {{ .Values.awsUseIMDSv2 }}
+            - name: SOFIA_SEARCH_DOMAINS
+              value: "1"
           lifecycle:
             preStop:
               exec:
@@ -101,6 +103,8 @@ spec:
               value: info
             - name: K8S 
               value: "1"
+            - name: K8S_SBC_SIP_SERVICE_NAME 
+              value: sbc-sip.{{ .Release.Namespace }}
             - name: JAMBONES_API_BASE_URL
               value: http://{{ .Values.api.hostname }}/v1
             - name: JAMBONES_TIME_SERIES_HOST 

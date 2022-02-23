@@ -89,7 +89,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.7.3 
+  image: jambonz/api-server:0.7.4-rc1
   imagePullPolicy: Always
   httpPort: "3000"
   # (required) hostname for the jambonz port ingress
@@ -139,7 +139,7 @@ sbcCallRouter:
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.7.3
+  image: jambonz/feature-server:0.7.4-rc1
   imagePullPolicy: Always
   httpPort: "3000"
   drachtioConnection: "localhost:9022:cymru"
