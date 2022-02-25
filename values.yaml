@@ -63,7 +63,7 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:0.8.14
+  image: drachtio/drachtio-server:0.8.15
   host: "127.0.0.1"
   port: "9022"
   homerId: "10"
@@ -153,3 +153,9 @@ sbcSip:
 # sidecar to wait for database up
 dbWaiter:
   image: d3fk/kubectl:v1.18
+
+# if you want to block bad sip actors, get an api key from apiban.org and put it below
+apiban: 
+  apiKey: 
+  redisKey: "apiban:ips"
+  refreshInterval: "300"
