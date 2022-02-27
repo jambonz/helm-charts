@@ -3,7 +3,38 @@ entries:
   jambonz:
   - apiVersion: v2
     appVersion: 0.7.4-rc1
-    created: "2022-02-25T16:39:36.138753-05:00"
+    created: "2022-02-27T18:13:15.641725-05:00"
+    dependencies:
+    - condition: db.enabled
+      name: db
+      repository: ""
+      version: 0.1.1
+    - condition: monitoring.enabled
+      name: monitoring
+      repository: ""
+      version: 0.1.1
+    description: open source CPaaS for communication service providers
+    digest: 88f96a58abc282cbe08e36853bb01e914a59faa1aae58366a682907fd43bf930
+    home: https://jambonz.org
+    keywords:
+    - voip
+    - cpaas
+    - webRTC
+    - sip
+    - rtp
+    maintainers:
+    - email: daveh@drachtio.org
+      name: Dave Horton
+    name: jambonz
+    sources:
+    - https://github.com/jambonz/helm-charts
+    - https://github.com/jambonz/jambonz-infrastructure
+    urls:
+    - jambonz-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.7.4-rc1
+    created: "2022-02-27T18:13:15.640204-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -34,7 +65,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 0.7.4-rc1
-    created: "2022-02-25T16:39:36.132545-05:00"
+    created: "2022-02-27T18:13:15.631491-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -65,7 +96,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.7.3
-    created: "2022-02-25T16:39:36.128347-05:00"
+    created: "2022-02-27T18:13:15.625908-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -96,7 +127,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.7.2
-    created: "2022-02-25T16:39:36.125825-05:00"
+    created: "2022-02-27T18:13:15.622727-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -126,7 +157,7 @@ entries:
     - jambonz-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v2
-    created: "2022-02-25T16:39:36.121863-05:00"
+    created: "2022-02-27T18:13:15.617803-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -155,4 +186,4 @@ entries:
     urls:
     - jambonz-0.1.0.tgz
     version: 0.1.0
-generated: "2022-02-25T16:39:36.120042-05:00"
+generated: "2022-02-27T18:13:15.615266-05:00"
