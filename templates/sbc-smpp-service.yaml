@@ -2,19 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: sbc-sip
+    app: sbc-smpp
 {{ include "common.labels" . | indent 4 }}
-  name: sbc-sip
+  name: sbc-smpp
   namespace: {{ .Release.Namespace | quote }}
 spec:
   ports:
-    - name: sip-udp
-      port: 5060
-      targetPort: 5060
-      protocol: UDP
-    - name: sip-tco
-      port: 5060
-      targetPort: 5060
+    - name: smpp
+      port: 80
+      targetPort: 80
       protocol: TCP
   selector:
     app: jambonz-sbc-sip

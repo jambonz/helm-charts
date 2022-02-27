@@ -32,7 +32,7 @@ spec:
               value: "/grafana"
             - name: NODE_OPTIONS
               value: '--openssl-legacy-provider'
-          image: jambonz/webapp:latest
+          image:  {{ .Values.webapp.image }}
           name: webapp
           ports:
             - containerPort: 3001

@@ -1,0 +1,26 @@
+{{- if .Values.apiban.apiKey }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: apiban-redis
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: apiban-redis
+            image: jambonz/apiban-redis:latest
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: APIBAN_REDIS_KEY
+              value: {{ .Values.apiban.redisKey | quote }}
+            - name: APIBAN_REDIS_SERVER
+              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: APIBAN_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}
+            - name: APIBAN_API_KEY
+              value: {{ .Values.apiban.apiKey | quote }}
+          restartPolicy: Never
+{{- end }} 

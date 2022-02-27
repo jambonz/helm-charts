@@ -15,6 +15,13 @@ spec:
       labels:
         app: feature-server
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: feature-server    
       initContainers:
         - image: kanisterio/mysql-sidecar:0.40.0
           name: db-create-wait
@@ -41,6 +48,8 @@ spec:
               value: {{ required "cloud provider name"  .Values.cloud | quote }}
             - name: IMDSv2 
               value: {{ .Values.awsUseIMDSv2 }}
+            - name: SOFIA_SEARCH_DOMAINS
+              value: "1"
           lifecycle:
             preStop:
               exec:
@@ -49,7 +58,7 @@ spec:
                   "-c",
                   "while $(curl --output /dev/null --silent --head --fail-early http://127.0.0.1:3000); do printf '.'; sleep 10; done"
                 ]
-          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp']
+          args: ['drachtio', '--contact', 'sip:*:5060;transport=udp', '--loglevel', 'info', 'sofia-loglevel', '3']
           ports:
             - containerPort: 9022
         - name: freeswitch
@@ -94,6 +103,10 @@ spec:
               value: info
             - name: K8S 
               value: "1"
+            - name: K8S_SBC_SIP_SERVICE_NAME 
+              value: sbc-sip.{{ .Release.Namespace }}
+            - name: JAMBONES_API_BASE_URL
+              value: http://{{ .Values.api.hostname }}/v1
             - name: JAMBONES_TIME_SERIES_HOST 
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: DRACHTIO_HOST

@@ -42,7 +42,7 @@ spec:
                   key: MYSQL_PASSWORD
       containers:
         - name: drachtio
-          image: drachtio/drachtio-server:latest
+          image: {{ .Values.drachtio.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.drachtio.imagePullPolicy }}
           args: 
             - drachtio
@@ -55,6 +55,16 @@ spec:
             - heplify-server.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - --homer-id
             - {{ .Values.drachtio.homerId | quote }}
+{{- if .Values.apiban.apiKey }}
+            - --blacklist-redis-address
+            - redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - --blacklist-redis-port
+            - {{ .Values.redis.port | quote }}
+            - --blacklist-refresh-secs
+            - {{ .Values.apiban.refreshInterval | quote }}
+            - --blacklist-redis-key
+            - {{ .Values.apiban.redisKey | quote }}
+{{- end }}
           env:
             - name: DRACHTIO_SECRET
               valueFrom:
@@ -89,6 +99,10 @@ spec:
               value: "1"
             - name: JAMBONES_LOGLEVEL
               value: info
+            - name: JAMBONES_REDIS_HOST
+              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+            - name: JAMBONES_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}
             - name: JAMBONES_MYSQL_DATABASE
               value: {{ .Values.mysql.database }}
             - name: JAMBONES_MYSQL_HOST

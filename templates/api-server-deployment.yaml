@@ -42,6 +42,10 @@ spec:
               value: production
             - name: HTTP_PORT
               value: {{ .Values.api.httpPort | quote }}
+            - name: K8S 
+              value: "1"
+            - name: K8S_FEATURE_SERVER_SERVICE_NAME 
+              value: "feature-server"
             - name: JAMBONES_LOGLEVEL
               value: info
             - name: JAMBONES_TIME_SERIES_HOST 

@@ -2,8 +2,101 @@ apiVersion: v1
 entries:
   jambonz:
   - apiVersion: v2
+    appVersion: 0.7.4-rc1
+    created: "2022-02-25T16:39:36.138753-05:00"
+    dependencies:
+    - condition: db.enabled
+      name: db
+      repository: ""
+      version: 0.1.1
+    - condition: monitoring.enabled
+      name: monitoring
+      repository: ""
+      version: 0.1.1
+    description: open source CPaaS for communication service providers
+    digest: ea04891cbe163844e11198a84e25a6fcc069c2a0e2db8c7760bb276052c05944
+    home: https://jambonz.org
+    keywords:
+    - voip
+    - cpaas
+    - webRTC
+    - sip
+    - rtp
+    maintainers:
+    - email: daveh@drachtio.org
+      name: Dave Horton
+    name: jambonz
+    sources:
+    - https://github.com/jambonz/helm-charts
+    - https://github.com/jambonz/jambonz-infrastructure
+    urls:
+    - jambonz-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.7.4-rc1
+    created: "2022-02-25T16:39:36.132545-05:00"
+    dependencies:
+    - condition: db.enabled
+      name: db
+      repository: ""
+      version: 0.1.1
+    - condition: monitoring.enabled
+      name: monitoring
+      repository: ""
+      version: 0.1.1
+    description: open source CPaaS for communication service providers
+    digest: d8182498f412c541451bdd8b579c1d1333df4cb1139828b87800ca6b144477fd
+    home: https://jambonz.org
+    keywords:
+    - voip
+    - cpaas
+    - webRTC
+    - sip
+    - rtp
+    maintainers:
+    - email: daveh@drachtio.org
+      name: Dave Horton
+    name: jambonz
+    sources:
+    - https://github.com/jambonz/helm-charts
+    - https://github.com/jambonz/jambonz-infrastructure
+    urls:
+    - jambonz-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.7.3
+    created: "2022-02-25T16:39:36.128347-05:00"
+    dependencies:
+    - condition: db.enabled
+      name: db
+      repository: ""
+      version: 0.1.1
+    - condition: monitoring.enabled
+      name: monitoring
+      repository: ""
+      version: 0.1.1
+    description: open source CPaaS for communication service providers
+    digest: 1a40b5f41d36766a8e7baf8fec583f77141f5146441de93576b24f6c0ad5e215
+    home: https://jambonz.org
+    keywords:
+    - voip
+    - cpaas
+    - webRTC
+    - sip
+    - rtp
+    maintainers:
+    - email: daveh@drachtio.org
+      name: Dave Horton
+    name: jambonz
+    sources:
+    - https://github.com/jambonz/helm-charts
+    - https://github.com/jambonz/jambonz-infrastructure
+    urls:
+    - jambonz-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 0.7.2
-    created: "2022-01-28T14:44:37.833205-05:00"
+    created: "2022-02-25T16:39:36.125825-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -30,10 +123,10 @@ entries:
     - https://github.com/jambonz/helm-charts
     - https://github.com/jambonz/jambonz-infrastructure
     urls:
-    - https://jambonz.github.io/helm-charts/jambonz-0.1.1.tgz
+    - jambonz-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v2
-    created: "2022-01-28T14:44:37.828572-05:00"
+    created: "2022-02-25T16:39:36.121863-05:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -60,6 +153,6 @@ entries:
     - https://github.com/jambonz/helm-charts
     - https://github.com/jambonz/jambonz-infrastructure
     urls:
-    - https://jambonz.github.io/helm-charts/jambonz-0.1.0.tgz
+    - jambonz-0.1.0.tgz
     version: 0.1.0
-generated: "2022-01-28T14:44:37.826253-05:00"
+generated: "2022-02-25T16:39:36.120042-05:00"
