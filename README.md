@@ -133,8 +133,18 @@ Update values.yaml
     useHostnames: true 
 ```
 Set enabled to true to use Kong.
-If you set useHostnames to true Kong will
-automatically use the hostnames already created for the different services.
+
+
+useHostnames set to true will use the hostnames already created for the different services.
+Either create a wildcard for your hostnames
+
+useHostnames set to false will us the Kong IP address with prefixes.
+```bash
+<IP>/api
+<IP>/webapp
+<IP>/grafana
+<IP>/homer
+```
 
 
 ## Uninstalling the chart

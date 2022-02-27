@@ -78,20 +78,6 @@ spec:
             - mountPath: /var/lib/grafana/dashboards/jambonz-heplify.json
               name: grafana-provisioning
               subPath: jambonz-heplify.json
-      initContainers:
-        - name: take-data-dir-ownership
-          image: busybox
-          securityContext:
-            runAsUser: 0
-            privileged: true
-          command:
-          - chown
-          - -R
-          - 472:472
-          - /var/lib/grafana
-          volumeMounts:
-          - name: grafana-claim
-            mountPath: /var/lib/grafana
       restartPolicy: Always
       volumes:
       - name: grafana-provisioning
