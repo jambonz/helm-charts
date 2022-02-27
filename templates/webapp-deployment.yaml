@@ -21,7 +21,15 @@ spec:
             - name: NODE_ENV
               value: production
             - name: REACT_APP_API_BASE_URL
+              {{- if .Values.global.kong.enabled }}
+              {{- if .Values.global.kong.useHostnames }}            
               value: http://{{ .Values.api.hostname }}/v1
+              {{else}}
+              value: http://{{ .Values.api.hostname }}/webapp/v1
+              {{- end}}
+              {{- end}}
+            - name: GF_SERVER_ROOT_URL
+              value: "/grafana"
             - name: NODE_OPTIONS
               value: '--openssl-legacy-provider'
           image:  {{ .Values.webapp.image }}

@@ -114,6 +114,39 @@ homer-webapp   <none>   homer.example.com     35.241.2.62     80      6m10s
 
 Once you have done this you will want to create associated the DNS records in your DNS provider so that you can access these portals.
 
+## Using Kong API Gateway
+
+Run:
+```bash
+helm repo add kong https://charts.konghq.com
+helm install kong kong/kong -n <namespace> --set ingressController.installCRDs=false
+```
+Check pod status, and make sure the kong-kong-{ID} pod is running:
+```bash
+kubectl get pods -n <namespace> | grep kong
+```
+
+Update values.yaml
+```bash
+  kong:
+    enabled: true
+    useHostnames: true 
+```
+Set enabled to true to use Kong.
+
+
+useHostnames set to true will use the hostnames already created for the different services.
+Either create a wildcard for your hostnames
+
+useHostnames set to false will us the Kong IP address with prefixes.
+```bash
+<IP>/api
+<IP>/webapp
+<IP>/grafana
+<IP>/homer
+```
+
+
 ## Uninstalling the chart
 
 ```bash

@@ -1,3 +1,4 @@
+{{- if not .Values.global.kong.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -17,4 +18,4 @@ spec:
                 number:  {{ .Values.api.httpPort }}
           path: /
           pathType: Prefix
-
+{{- end}}

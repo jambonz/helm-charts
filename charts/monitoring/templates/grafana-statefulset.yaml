@@ -26,10 +26,28 @@ spec:
           name: grafana
           ports:
             - containerPort: 3000
+          {{- if .Values.global.kong.enabled }}
+          env:          
+          {{- if .Values.global.kong.useHostnames }}
+            - name: GF_SERVER_SERVE_FROM_SUB_PATH
+              value: "false"
+          {{else}}
+            - name: GF_SERVER_SERVE_FROM_SUB_PATH
+              value: "true"
+            - name: GF_SERVER_ROOT_URL
+              value: "/grafana"
+            {{- end}}
+          {{- end}}
           readinessProbe:
             failureThreshold: 3
             httpGet:
+              {{- if .Values.global.kong.enabled }}
+              {{- if .Values.global.kong.useHostnames }}
               path: /login
+              {{else}}
+              path: /grafana/login
+              {{- end}}
+              {{- end}}
               port: 3000
               scheme: HTTP
             initialDelaySeconds: 10
