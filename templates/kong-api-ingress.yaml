@@ -6,10 +6,8 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     kubernetes.io/ingress.class: kong
-    konghq.com/strip-path: "true"
+    konghq.com/strip-path: "false"
     konghq.com/plugins: ratelimit
-    #konghq.com/protocols: https
-    #konghq.com/https-redirect-status-code: "301"
   labels:
 {{ include "common.labels" . | indent 4 }}
 spec:
