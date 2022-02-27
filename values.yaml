@@ -4,7 +4,7 @@ global:
   dbNamespace: 
   monitoringNamespace:
   kong:
-    enabled: true
+    enabled: false
     useHostnames: true 
 
 db: 
