@@ -1,5 +1,5 @@
 grafana: 
-  image: grafana/grafana-oss:latest 
+  image: grafana/grafana-oss:8.4.3 
   hostname:
   storage: 2Gi
 heplifyServer: 
