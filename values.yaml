@@ -57,9 +57,9 @@ stats:
 # configuration information for rtpengine
 rtpengine: 
   image: jambonz/rtpengine:0.1.0 
-  imagePullPolicy: Always
-  sidecarImage: jambonz/rtpengine-sidecar:0.7.4-rc1
-  sidecarImagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
+  sidecarImage: jambonz/rtpengine-sidecar:0.7.4
+  sidecarImagePullPolicy: IfNotPresent
   dtmfLogPort:  "22223"
   loglevel: "5"
   homerId: "11"
@@ -73,8 +73,8 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.1
-  imagePullPolicy: Always
+  image: drachtio/drachtio-freeswitch-mrf:0.4.3
+  imagePullPolicy: IfNotPresent
 
 # mysql configuration used by Node.js app that need to connect
 mysql: 
@@ -92,58 +92,58 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/api-server:0.7.4
+  imagePullPolicy: IfNotPresent
   httpPort: "3000"
   # (required) hostname for the jambonz port ingress
   hostname:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/webapp:0.7.4
+  imagePullPolicy: IfNotPresent
   
   # (required) hostname for the jambonz port ingress
   hostname: 
 
 # 
 smpp:
-  image: jambonz/smpp-esme:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/smpp-esme:0.7.4
+  imagePullPolicy: IfNotPresent
 
 # sbc-options-handler configuration
 sbcOptionsHandler: 
-  image: jambonz/sbc-options-handler:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/sbc-options-handler:0.7.4
+  imagePullPolicy: IfNotPresent
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/sbc-inbound:0.7.4
+  imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/sbc-outbound:0.7.4
+  imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
 
 # sbc-registrar configuration
 sbcRegistrar: 
-  image: jambonz/sbc-registrar:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/sbc-registrar:0.7.4
+  imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/sbc-call-router:0.7.4
+  imagePullPolicy: IfNotPresent
   httpPort: "3000"
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.7.4-rc1
-  imagePullPolicy: Always
+  image: jambonz/feature-server:0.7.4
+  imagePullPolicy: IfNotPresent
   httpPort: "3000"
   drachtioConnection: "localhost:9022:cymru"
   freeswitchConnection: "localhost:8021:JambonzR0ck$"

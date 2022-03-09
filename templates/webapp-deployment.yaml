@@ -27,6 +27,8 @@ spec:
               {{else}}
               value: http://{{ .Values.api.hostname }}/webapp/v1
               {{- end}}
+              {{else}}
+              value: http://{{ .Values.api.hostname }}/v1
               {{- end}}
             - name: GF_SERVER_ROOT_URL
               value: "/grafana"

@@ -6,6 +6,8 @@ metadata:
   labels:
     app: jambonz-sbc-rtp
 {{ include "common.labels" . | indent 4 }}
+  annotations:
+    "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
 spec:
   selector:
     matchLabels:

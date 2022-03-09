@@ -6,6 +6,8 @@ metadata:
     app: feature-server
 {{ include "common.labels" . | indent 4 }}
   namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
 spec:
   selector:
     matchLabels:
@@ -119,6 +121,8 @@ spec:
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: ENABLE_METRICS
               value: {{ default "0" .Values.stats.enabled  | quote }}
+            - name: JAMBONZ_CLEANUP_INTERVAL_MINS
+              value: "60"
             {{- if .Values.stats.enabled }}
             - name: STATS_HOST
               value: {{ .Values.stats.host }}.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
