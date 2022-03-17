@@ -66,14 +66,14 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:0.8.15
+  image: drachtio/drachtio-server:0.8.16
   host: "127.0.0.1"
   port: "9022"
   homerId: "10"
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.3
+  image: drachtio/drachtio-freeswitch-mrf:0.4.4
   imagePullPolicy: IfNotPresent
 
 # mysql configuration used by Node.js app that need to connect

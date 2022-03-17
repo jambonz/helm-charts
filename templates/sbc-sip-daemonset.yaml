@@ -73,6 +73,8 @@ spec:
                   key: DRACHTIO_SECRET
             - name: SOFIA_SEARCH_DOMAINS
               value: "1"
+            - name: SOFIA_SRES_NO_CACHE
+              value: "1"
             - name: CLOUD 
               value: {{ required "cloud provider name" .Values.cloud | quote }}
             - name: IMDSv2 

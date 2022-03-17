@@ -3,7 +3,7 @@ grafana:
   hostname:
   storage: 2Gi
 heplifyServer: 
-  image: sipcapture/heplify-server:master
+  image: sipcapture/heplify-server:latest
 influxdb: 
   image: influxdb:1.8
   loglevel: info
