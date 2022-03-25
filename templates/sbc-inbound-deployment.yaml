@@ -40,6 +40,14 @@ spec:
             preStop:
               exec:
                 command: ["/bin/sh", "-c", "/opt/app/bin/k8s-pre-stop-hook.js"]
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - /opt/app/liveness.sh
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 60
+          #   failureThreshold: 2
           ports:
             - name: dtmf
               containerPort: 22224
