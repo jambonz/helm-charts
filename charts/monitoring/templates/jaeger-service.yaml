@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jaeger
+{{ include "common.labels" . | indent 4 }}
+  name: jaeger
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  ports:
+    - name: "jaeger-ui"
+      port: 16686
+      targetPort: 16686
+      protocol: TCP
+    - name: "collector"
+      port: 6832
+      targetPort: 6832
+      protocol: UDP
+  selector:
+    app: jaeger
+  clusterIP: None

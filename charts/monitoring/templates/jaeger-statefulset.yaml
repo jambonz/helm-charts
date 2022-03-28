@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jaeger
+  labels:
+    app: jaeger
+{{ include "common.labels" . | indent 4 }}
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  serviceName: jaeger
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger
+  template:
+    metadata:
+      labels:
+        app: jaeger
+    spec:
+      containers:
+        - name: jaeger
+          image: {{ .Values.jaeger.image }}
+          ports:
+            - containerPort: 16686
+              protocol: TCP
+              name: "ui"
+            - containerPort: 6832
+              protocol: UDP
+              name: "collector"
+          resources: {}

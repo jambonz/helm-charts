@@ -119,8 +119,6 @@ spec:
               value: "9022"
             - name: JAMBONES_FREESWITCH
               value: {{ .Values.featureServer.freeswitchConnection | quote }}
-            - name: JAMBONES_TIME_SERIES_HOST 
-              value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: ENABLE_METRICS
               value: {{ default "0" .Values.stats.enabled  | quote }}
             - name: JAMBONZ_CLEANUP_INTERVAL_MINS
@@ -137,6 +135,10 @@ spec:
             - name: STATS_SAMPLE_RATE
               value:  {{ .Values.stats.sampleRate | quote }}
             {{- end }}
+            - name: JAMBONES_OTEL_ENABLED
+              value: "1" 
+            - name: OTEL_EXPORTER_JAEGER_AGENT_HOST
+              value: jaeger.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: JAMBONES_REDIS_HOST
               value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
             - name: JAMBONES_REDIS_PORT

@@ -16,4 +16,7 @@ postgres:
   storage: 30Gi 
 telegraf: 
   image: telegraf:1.19
+jaeger: 
+  image: jaegertracing/all-in-one:1.32
+  hostname: 
 
