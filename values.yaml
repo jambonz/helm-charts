@@ -146,8 +146,8 @@ featureServer:
   image: jambonz/feature-server:latest
   imagePullPolicy: Always
   httpPort: "3000"
-  drachtioConnection: "localhost:9022:cymru"
-  freeswitchConnection: "localhost:8021:JambonzR0ck$"
+  drachtioConnection: "127.0.0.1:9022:cymru"
+  freeswitchConnection: "127.0.0.1:8021:JambonzR0ck$"
 
 # sbc-sip configuration
 sbcSip: 
