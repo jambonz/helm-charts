@@ -48,6 +48,23 @@ spec:
       host: {{ required "hostname for Homer" .Values.homer.hostname }}
       {{- end}}
 
+    - http:
+        paths:
+        {{- if .Values.global.kong.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /jaeger
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: jaeger
+                port:
+                  number: 16686
+      {{- if .Values.global.kong.useHostnames }}
+      host: {{ required "hostname for jaeger" .Values.jaeger.hostname }}
+      {{- end}}
+
 {{- end}}
       
           
