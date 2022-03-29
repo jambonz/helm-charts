@@ -4,8 +4,8 @@ kind: KongPlugin
 metadata:
   name: ratelimit
 config:
-  hour: 100
+  hour: 1000
   limit_by: ip
-  second: 10
+  second: 50
 plugin: rate-limiting
 {{- end}}
