@@ -23,12 +23,12 @@ spec:
             - name: REACT_APP_API_BASE_URL
               {{- if .Values.global.kong.enabled }}
               {{- if .Values.global.kong.useHostnames }}            
-              value: http://{{ .Values.api.hostname }}/v1
+              value: {{ default "http" .Values.api.protocol }}://{{ .Values.api.hostname }}/v1
               {{else}}
-              value: http://{{ .Values.api.hostname }}/webapp/v1
+              value: {{ default "http" .Values.api.protocol }}://{{ .Values.api.hostname }}/webapp/v1
               {{- end}}
               {{else}}
-              value: http://{{ .Values.api.hostname }}/v1
+              value: {{ default "http" .Values.api.protocol }}://{{ .Values.api.hostname }}/v1
               {{- end}}
             - name: GF_SERVER_ROOT_URL
               value: "/grafana"
