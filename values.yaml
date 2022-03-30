@@ -1,8 +1,10 @@
 global:
   # if defined, create and/or reference db and monitoring services in the specified namespace;
   # otherwise they create and/or referenced them in whatever the .Release namespace is
-  dbNamespace: 
-  monitoringNamespace:
+  db:
+    namespace: 
+  monitoring:
+    namespace:
   kong:
     enabled: false
     useHostnames: true 
@@ -10,6 +12,8 @@ global:
 db: 
   # if true, create the db subchart
   enabled: true
+  mysql: 
+    secret: amFtYm9uZXM=
 monitoring: 
   # if true, create the monitoring subchart
   enabled: true 
@@ -19,6 +23,9 @@ cloud:
 
 # set this to "1" if you are deploying on AWS and you are using IMDSv2
 awsUseIMDSv2:
+
+jwt:
+  secret: Rz11JS05NyNUZmZZZg==
 
 # basic information that applies to all jambonz Node.js app
 jambonz: 
@@ -71,6 +78,7 @@ drachtio:
   host: "127.0.0.1"
   port: "9022"
   homerId: "10"
+  secret: Y3ltcnU=
 
 # freeswitch configuration
 freeswitch: 
@@ -98,6 +106,9 @@ api:
   httpPort: "3000"
   # (required) hostname for the jambonz port ingress
   hostname:
+  # defaults to http, if you have tls enabled change to https 
+  # otherwise web to api connection will fail
+  protocol:
 
 # jambonz-webapp configuration
 webapp: 

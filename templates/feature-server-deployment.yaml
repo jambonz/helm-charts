@@ -49,11 +49,16 @@ spec:
             - name: CLOUD 
               value: {{ required "cloud provider name"  .Values.cloud | quote }}
             - name: IMDSv2 
-              value: {{ .Values.awsUseIMDSv2 }}
+              value: {{ .Values.awsUseIMDSv2 | quote }}
             - name: SOFIA_SEARCH_DOMAINS
               value: "1"
             - name: SOFIA_SRES_NO_CACHE
               value: "1"
+            - name: DRACHTIO_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: DRACHTIO_SECRET
           lifecycle:
             preStop:
               exec:

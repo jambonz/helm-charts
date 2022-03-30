@@ -5,7 +5,7 @@ mysql:
   database: jambones
   user: jambones 
   storage: 10Gi
-
+  secret: amFtYm9uZXM=
 # redis configuration used by Node.js app that need to connect
 redis: 
   image: redis:alpine
