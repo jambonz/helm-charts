@@ -63,7 +63,7 @@ stats:
 
 # configuration information for rtpengine
 rtpengine: 
-  image: jambonz/rtpengine:0.1.0 
+  image: jambonz/rtpengine:0.1.1
   imagePullPolicy: IfNotPresent
   sidecarImage: jambonz/rtpengine-sidecar:0.7.4
   sidecarImagePullPolicy: IfNotPresent
@@ -73,7 +73,7 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:0.8.16
+  image: drachtio/drachtio-server:latest
   imagePullPolicy: Always
   host: "127.0.0.1"
   port: "9022"
