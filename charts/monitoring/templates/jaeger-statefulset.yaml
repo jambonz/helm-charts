@@ -24,6 +24,9 @@ spec:
             - containerPort: 16686
               protocol: TCP
               name: "ui"
+            - containerPort: 6831
+              protocol: UDP
+              name: "compact"
             - containerPort: 6832
               protocol: UDP
               name: "collector"
