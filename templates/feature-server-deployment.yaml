@@ -99,6 +99,8 @@ spec:
             - mountPath: /tmp 
               name: temp-audio-volume
           env:
+            - name: AWS_REGION
+              value: {{ .Values.featureServer.awsRegion }}
             - name: NODE_ENV
               value: production
             - name: HTTP_PORT

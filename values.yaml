@@ -148,6 +148,7 @@ featureServer:
   httpPort: "3000"
   drachtioConnection: "127.0.0.1:9022:cymru"
   freeswitchConnection: "127.0.0.1:8021:JambonzR0ck$"
+  awsRegion: us-west-1
 
 # sbc-sip configuration
 sbcSip: 
