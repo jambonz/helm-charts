@@ -104,6 +104,7 @@ api:
   image: jambonz/api-server:latest
   imagePullPolicy: Always
   httpPort: "3000"
+  replicas: 1
   # (required) hostname for the jambonz port ingress
   hostname:
   # defaults to http, if you have tls enabled change to https 
@@ -114,6 +115,7 @@ api:
 webapp: 
   image: jambonz/webapp:latest
   imagePullPolicy: Always
+  replicas: 1
   
   # (required) hostname for the jambonz port ingress
   hostname: 
@@ -133,24 +135,28 @@ sbcInbound:
   image: jambonz/sbc-inbound:latest
   imagePullPolicy: Always
   drachtioPort: "4000"
+  replicas: 1
 
 # sbc-outbound configuration
 sbcOutbound: 
   image: jambonz/sbc-outbound:latest
   imagePullPolicy: Always
   drachtioPort: "4000"
+  replicas: 1
 
 # sbc-registrar configuration
 sbcRegistrar: 
   image: jambonz/sbc-registrar:latest
   imagePullPolicy: Always
   drachtioPort: "4000"
+  replicas: 1
 
 # sbc-call-router configuration
 sbcCallRouter: 
   image: jambonz/sbc-call-router:latest
   imagePullPolicy: Always
   httpPort: "3000"
+  replicas: 1
 
 # feature-server configuration
 featureServer: 
@@ -160,6 +166,7 @@ featureServer:
   drachtioConnection: "127.0.0.1:9022:cymru"
   freeswitchConnection: "127.0.0.1:8021:JambonzR0ck$"
   awsRegion: us-west-1
+  replicas: 1
 
 # sbc-sip configuration
 sbcSip: 
