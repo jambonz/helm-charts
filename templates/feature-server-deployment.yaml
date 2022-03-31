@@ -9,6 +9,7 @@ metadata:
   annotations:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
 spec:
+  replicas: {{ default 1 .Values.featureServer.replicas }}
   selector:
     matchLabels:
       app: feature-server

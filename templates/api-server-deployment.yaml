@@ -7,7 +7,7 @@ metadata:
   name: api-server
   namespace: {{ .Release.Namespace | quote }}
 spec:
-  replicas: 1
+  replicas: {{ default 1 .Values.api.replicas }}
   selector:
     matchLabels:
       app: api-server
