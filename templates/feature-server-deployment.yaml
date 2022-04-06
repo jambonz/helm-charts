@@ -112,7 +112,9 @@ spec:
             - name: HTTP_PORT
               value: {{ .Values.featureServer.httpPort | quote }}
             - name: JAMBONES_LOGLEVEL
-              value: info
+              value: debug
+            - name: JAMBONES_INJECT_CONTENT
+              value: "1"
             - name: K8S 
               value: "1"
             - name: K8S_SBC_SIP_SERVICE_NAME 
