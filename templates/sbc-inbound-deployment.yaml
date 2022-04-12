@@ -16,23 +16,6 @@ spec:
       labels:
         app: sbc-inbound
     spec:
-      initContainers:
-        - image: kanisterio/mysql-sidecar:0.40.0
-          name: db-create-wait
-          command:
-            - sh 
-            - -c 
-            - |
-              until mysql -u {{ .Values.mysql.user }} -D {{ .Values.mysql.database }} -h mysql.{{ default .Release.Namespace .Values.global.db.namespace }} -p${MYSQL_PASSWORD} --protocol=tcp -e "select count(*) from accounts";
-              do 
-                sleep 5
-              done
-          env:
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: jambonz-secrets
-                  key: MYSQL_PASSWORD
       containers:
         - name: sbc-inbound
           image: {{ .Values.sbcInbound.image }}
@@ -41,6 +24,18 @@ spec:
             preStop:
               exec:
                 command: ["/bin/sh", "-c", "/opt/app/bin/k8s-pre-stop-hook.js"]
+          livenessProbe:
+            httpGet:
+              path: /system-health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /system-health
+              port: 3000
+            failureThreshold: 40
+            periodSeconds: 10
           ports:
             - name: dtmf
               containerPort: 22224
