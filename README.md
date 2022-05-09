@@ -307,6 +307,7 @@ Your updated sbc-sip-daemonset yaml should look something like this:
                             value: /etc/letsencrypt/tls.key
                           - name: WSS_PORT
                             value: "8443"
+                          ...
 ```
 
-This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests.
+This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests. 
