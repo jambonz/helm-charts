@@ -263,18 +263,20 @@ To obtain certificates, you just need to create resources of type [Certificate](
         name: ca-issuer # name of your issuer as defined at step 1
         kind: Issuer #or ClusterIssuer
 ```
-As soon as you apply this CRD, you will have new CertificateRequest created. And secret (drachtio-certs) created in jambonz  namespace
+As soon as you apply this CRD, you will have a new CertificateRequest created and a secret (drachtio-certs) created in jambonz  namespace.
 
 ### Use your certs 
 
-To use created certificates on drachtio server, you just have to mount *drachtio-certs* secret as volume on your Pod.
+To use the created certificates on drachtio server, you just have to mount *drachtio-certs* secret as volume on your Pod.
 In created secret (drachtio-certs) you will have two keys:
 ```
     - tls.key: base64 encoded private key
     - tls.crt: base64 encoded full certs chain. 
 ```
 
-You also need to choose a port to listen on for sip over wss.  In the example below, we are using port 8443.  Finally, you need to be running drachtio server version 0.8.17-rc1 or later.
+You also need to choose a port to listen on for sip over wss.  In the example below, we are using port 8443.  
+
+> Note: you must be running drachtio server version 0.8.17-rc1 or later for support of the WSS_SIP env variable.
 
 Your updated sbc-sip-daemonset yaml should look something like this: 
 
@@ -306,3 +308,5 @@ Your updated sbc-sip-daemonset yaml should look something like this:
                           - name: WSS_PORT
                             value: "8443"
 ```
+
+This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests.
