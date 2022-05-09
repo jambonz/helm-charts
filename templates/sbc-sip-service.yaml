@@ -12,7 +12,7 @@ spec:
       port: 5060
       targetPort: 5060
       protocol: UDP
-    - name: sip-tco
+    - name: sip-tcp
       port: 5060
       targetPort: 5060
       protocol: TCP

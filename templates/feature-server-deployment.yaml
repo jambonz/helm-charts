@@ -77,6 +77,13 @@ spec:
           args: 
             - freeswitch 
             - --codec-answer-generous
+          env: 
+            - name: MOD_AUDIO_FORK_SUBPROTOCOL_NAME
+              value: audio.jambonz.org
+            - name: MOD_AUDIO_FORK_SERVICE_THREADS
+              value: "1"
+            - name: MOD_AUDIO_FORK_BUFFER_SECS
+              value: "3"
           lifecycle:
             preStop:
               exec:
@@ -149,6 +156,10 @@ spec:
               value: "1" 
             - name: OTEL_EXPORTER_JAEGER_AGENT_HOST
               value: jaeger.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: OTEL_TRACES_SAMPLER
+              value: parentbased_traceidratio
+            - name: OTEL_TRACES_SAMPLER_ARG
+              value: {{ default "1.0" .Values.featureServer.otelSampleRate | quote }}
             - name: JAMBONES_REDIS_HOST
               value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
             - name: JAMBONES_REDIS_PORT

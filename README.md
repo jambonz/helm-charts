@@ -233,5 +233,76 @@ helm uninstall -n <namespace> <release-name>
 |dbWaiter.image|image of sidecar mysql client app to use for testing database readiness|d3fk/kubectl:v1.18|
 
 
+## Configuring jambonz to use sip over websockets
 
+### Prerequisites
+You need to have an  Certificate Issuer installed on your kubernetes cluster. If you don't, you can install [cert-manager](https://cert-manager.io) which allows you to obtain and renew automatically valid Let's Encrypt certificates.
 
+### Request Certificate
+To obtain certificates, you just need to create resources of type [Certificate](https://cert-manager.io/docs/usage/certificate/) in the namespace of your choice
+
+```yaml
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: drachtio-certificate
+      namespace: jambonz
+    spec:
+      # Secret names are always required.
+      secretName: drachtio-certs
+      duration: 2160h # 90d
+      renewBefore: 360h # 15d
+      usages:
+        - server auth
+        - client auth
+      # At least one of a DNS Name, URI, or IP address is required.
+      dnsNames:
+        - example.com # Change this with your domain name
+        - www.example.com # Change this with your domain name
+      issuerRef:
+        name: ca-issuer # name of your issuer as defined at step 1
+        kind: Issuer #or ClusterIssuer
+```
+As soon as you apply this CRD, you will have new CertificateRequest created. And secret (drachtio-certs) created in jambonz  namespace
+
+### Use your certs 
+
+To use created certificates on drachtio server, you just have to mount *drachtio-certs* secret as volume on your Pod.
+In created secret (drachtio-certs) you will have two keys:
+```
+    - tls.key: base64 encoded private key
+    - tls.crt: base64 encoded full certs chain. 
+```
+
+You also need to choose a port to listen on for sip over wss.  In the example below, we are using port 8443.  Finally, you need to be running drachtio server version 0.8.17-rc1 or later.
+
+Your updated sbc-sip-daemonset yaml should look something like this: 
+
+```yaml
+      spec:
+          template: 
+              spec: 
+                  volumes:
+                      - name: drachtio-certs
+                        secret:
+                          secretName: drachtio-certs
+                          items:
+                            - key: tls.crt
+                              path: tls.crt
+                            - key: tls.key
+                              path: tls.key
+                          defaultMode: 420
+                  containers:
+                      - name: drachtio
+                        ...
+                        volumeMounts:
+                        - name: drachtio-certs
+                          mountPath: /etc/letsencrypt/
+                        env:
+                          - name: DRACHTIO_TLS_CERT_FILE
+                            value: /etc/letsencrypt/tls.crt
+                          - name: DRACHTIO_TLS_KEY_FILE
+                            value: /etc/letsencrypt/tls.key
+                          - name: WSS_PORT
+                            value: "8443"
+```

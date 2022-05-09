@@ -65,7 +65,7 @@ stats:
 rtpengine: 
   image: jambonz/rtpengine:0.1.1
   imagePullPolicy: IfNotPresent
-  sidecarImage: jambonz/rtpengine-sidecar:0.7.5-rc5
+  sidecarImage: jambonz/rtpengine-sidecar:0.7.5-rc10
   sidecarImagePullPolicy: IfNotPresent
   dtmfLogPort:  "22223"
   loglevel: "5"
@@ -73,7 +73,7 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:0.8.16
+  image: drachtio/drachtio-server:0.8.17-rc1
   imagePullPolicy: Always
   host: "127.0.0.1"
   port: "9022"
@@ -82,7 +82,7 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.5
+  image: drachtio/drachtio-freeswitch-mrf:0.4.8
   imagePullPolicy: IfNotPresent
 
 # mysql configuration used by Node.js app that need to connect
@@ -101,7 +101,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.7.5-rc5
+  image: jambonz/api-server:0.7.5-rc10
   imagePullPolicy: Always
   httpPort: "3000"
   replicas: 1
@@ -113,7 +113,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.7.5-rc5
+  image: jambonz/webapp:0.7.5-rc10
   imagePullPolicy: Always
   replicas: 1
   
@@ -122,51 +122,52 @@ webapp:
 
 # 
 smpp:
-  image: jambonz/smpp-esme:0.7.5-rc5
+  image: jambonz/smpp-esme:0.7.5-rc10
   imagePullPolicy: Always
 
 # sbc-options-handler configuration
 sbcOptionsHandler: 
-  image: jambonz/sbc-options-handler:0.7.5-rc5
+  image: jambonz/sbc-options-handler:0.7.5-rc10
   imagePullPolicy: Always
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.7.5-rc5
+  image: jambonz/sbc-inbound:0.7.5-rc10
   imagePullPolicy: Always
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.7.5-rc5
+  image: jambonz/sbc-outbound:0.7.5-rc10
   imagePullPolicy: Always
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-registrar configuration
 sbcRegistrar: 
-  image: jambonz/sbc-registrar:0.7.5-rc5
+  image: jambonz/sbc-registrar:0.7.5-rc10
   imagePullPolicy: Always
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.7.5-rc5
+  image: jambonz/sbc-call-router:0.7.5-rc10
   imagePullPolicy: Always
   httpPort: "3000"
   replicas: 1
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.7.5-rc5
+  image: jambonz/feature-server:0.7.5-rc10
   imagePullPolicy: Always
   httpPort: "3000"
   drachtioConnection: "127.0.0.1:9022:cymru"
   freeswitchConnection: "127.0.0.1:8021:JambonzR0ck$"
   awsRegion: us-west-1
   replicas: 1
+  otelSampleRate: 1.0
 
 # sbc-sip configuration
 sbcSip: 
