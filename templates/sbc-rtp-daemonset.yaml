@@ -18,7 +18,7 @@ spec:
         app: jambonz-sbc-rtp
     spec:
       nodeSelector:
-        {{ .Values.sbc.rtp.nodeSelector.label }}: {{.Values.sbc.rtp.nodeSelector.value }}
+        {{ .Values.sbc.rtp.nodeSelector.label }}: {{.Values.sbc.rtp.nodeSelector.value | quote }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       tolerations:
