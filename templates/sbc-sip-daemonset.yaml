@@ -16,7 +16,7 @@ spec:
         app: jambonz-sbc-sip
     spec:
       nodeSelector:
-        {{ .Values.sbc.sip.nodeSelector.label }}: {{.Values.sbc.sip.nodeSelector.value }}
+        {{ .Values.sbc.sip.nodeSelector.label }}: {{.Values.sbc.sip.nodeSelector.value | quote }}
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       tolerations:
