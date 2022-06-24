@@ -74,9 +74,10 @@ spec:
         - name: freeswitch
           image: {{ .Values.freeswitch.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.freeswitch.imagePullPolicy }}
-          args: 
-            - freeswitch 
-            - --codec-answer-generous
+          args:
+          {{- range .Values.freeswitch.args }}
+            - {{ . }}
+          {{- end }}
           env: 
             - name: MOD_AUDIO_FORK_SUBPROTOCOL_NAME
               value: audio.jambonz.org

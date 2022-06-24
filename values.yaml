@@ -84,6 +84,9 @@ drachtio:
 freeswitch: 
   image: drachtio/drachtio-freeswitch-mrf:0.4.8
   imagePullPolicy: IfNotPresent
+  args:
+    - freeswitch
+    - --codec-answer-generous
 
 # mysql configuration used by Node.js app that need to connect
 mysql: 
