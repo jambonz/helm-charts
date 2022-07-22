@@ -52,7 +52,7 @@ spec:
             - --sofia-loglevel
             - {{ .Values.sbcSip.sofiaLoglevel | quote }}
             - --homer
-            - heplify-server.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - heplify-server.{{ default .Release.Namespace .Values.global.monitoring.namespace }}:9060
             - --homer-id
             - {{ .Values.drachtio.homerId | quote }}
 {{- if .Values.apiban.apiKey }}
