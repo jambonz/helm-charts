@@ -75,6 +75,7 @@ The cloud provider where the Kubernetes cluster is running (google, in this case
  --set "global.monitoring.namespace=monitoring" \
  --set "monitoring.grafana.hostname=grafana.example.com" \
  --set "monitoring.homer.hostname=homer.example.com" \
+ --set "monitoring.jaeger.hostname=jaeger.example.com" \
 --set "webapp.hostname=portal.example.com" \
 --set "api.hostname=api.example.com" \
 --set cloud=gcp \
@@ -84,7 +85,7 @@ jambonz/jambonz
  Installing the chart into a single namespace:
 
  ```bash
-  helm install --namespace=jambonz \
+helm install --namespace=jambonz \
  --generate-name --create-namespace \
  --set "monitoring.grafana.hostname=grafana.example.com" \
  --set "monitoring.homer.hostname=homer.example.com" \
