@@ -1,13 +1,13 @@
 # mysql configuration
 mysql: 
   image: mysql:5.7
-  host: mysql 
+  host: 
   database: jambones
-  user: jambones 
+  user: 
   storage: 10Gi
-  secret: amFtYm9uZXM=
+  secret: 
 # redis configuration used by Node.js app that need to connect
 redis: 
   image: redis:alpine
-  host: redis 
+  host: 
   port: "6379"

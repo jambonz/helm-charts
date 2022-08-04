@@ -54,7 +54,10 @@ spec:
             - name: JAMBONES_LOGLEVEL
               value: info
             - name: JAMBONES_REDIS_HOST
-              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: REDIS_HOST
             - name: JAMBONES_REDIS_PORT
               value: {{ .Values.redis.port | quote }}
             - name: RTPENGINE_DTMF_LOG_PORT

@@ -13,7 +13,7 @@ db:
   # if true, create the db subchart
   enabled: true
   mysql: 
-    secret: amFtYm9uZXM=
+    secret: 
 monitoring: 
   # if true, create the monitoring subchart
   enabled: true 

@@ -102,7 +102,10 @@ spec:
             - name: JAMBONES_LOGLEVEL
               value: info
             - name: JAMBONES_REDIS_HOST
-              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: REDIS_HOST
             - name: JAMBONES_REDIS_PORT
               value: {{ .Values.redis.port | quote }}
             - name: JAMBONES_MYSQL_DATABASE
@@ -138,7 +141,10 @@ spec:
             - name: AVOID_UDH 
               value: "1"
             - name: JAMBONES_REDIS_HOST
-              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: REDIS_HOST
             - name: JAMBONES_REDIS_PORT
               value: {{ .Values.redis.port | quote }}            
             - name: JAMBONES_MYSQL_DATABASE

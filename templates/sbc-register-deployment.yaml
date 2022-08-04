@@ -72,7 +72,10 @@ spec:
                   name: jambonz-secrets
                   key: MYSQL_PASSWORD
             - name: JAMBONES_REDIS_HOST
-              value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: REDIS_HOST
             - name: JAMBONES_REDIS_PORT
               value: {{ .Values.redis.port | quote }}
             - name: DRACHTIO_SECRET
