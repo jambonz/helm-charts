@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: db 
-          image: jambonz/db-create:latest 
+          image: jambonz/db-create:0.7.6-rc6 
           env:
             - name: JAMBONES_MYSQL_HOST
               value: {{ .Values.mysql.host }}
