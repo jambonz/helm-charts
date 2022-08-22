@@ -73,7 +73,7 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:0.8.18-rc5
+  image: drachtio/drachtio-server:0.8.18-rc6
   imagePullPolicy: Always
   host: "127.0.0.1"
   port: "9022"
@@ -82,7 +82,7 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.11
+  image: drachtio/drachtio-freeswitch-mrf:0.4.12
   imagePullPolicy: IfNotPresent
   args:
     - freeswitch
