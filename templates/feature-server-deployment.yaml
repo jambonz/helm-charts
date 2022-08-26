@@ -112,6 +112,9 @@ spec:
           volumeMounts:
             - mountPath: /tmp 
               name: temp-audio-volume
+            - mountPath: /etc/voicemail-phraselist.json
+              name: voicemail-phraselist
+              subPath:  voicemail-phraselist.json
           env:
             - name: AWS_REGION
               value: {{ .Values.featureServer.awsRegion }}
@@ -121,6 +124,8 @@ spec:
               value: {{ .Values.featureServer.httpPort | quote }}
             - name: JAMBONES_LOGLEVEL
               value: debug
+            - name: VMD_HINTS_FILE
+              value: /etc/voicemail-phraselist.json
             - name: JAMBONES_INJECT_CONTENT
               value: "1"
             - name: K8S 
@@ -190,7 +195,13 @@ spec:
             - containerPort: 3000
           resources: {}
       restartPolicy: Always
-      volumes:
-      - name: temp-audio-volume
-        emptyDir: {}
       terminationGracePeriodSeconds: 900
+      volumes:
+        - name: temp-audio-volume
+          emptyDir: {}
+        - name: voicemail-phraselist
+          configMap:
+            name: voicemail-phraselist
+            items:
+              - key: voicemail-phraselist.json
+                path: voicemail-phraselist.json
