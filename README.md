@@ -311,49 +311,17 @@ To obtain certificates, you just need to create resources of type [Certificate](
 ```
 As soon as you apply this CRD, you will have a new CertificateRequest created and a secret (drachtio-certs) created in jambonz  namespace.
 
-### Use your certs 
+### Use your certs
 
-To use the created certificates on drachtio server, you just have to mount *drachtio-certs* secret as volume on your Pod.
-In created secret (drachtio-certs) you will have two keys:
-```
-    - tls.key: base64 encoded private key
-    - tls.crt: base64 encoded full certs chain. 
-```
-
-You also need to choose a port to listen on for sip over wss.  In the example below, we are using port 8443.  
-
-> Note: you must be running drachtio server version 0.8.17-rc1 or later for support of the WSS_SIP env variable.
-
-Your updated sbc-sip-daemonset yaml should look something like this: 
+To use the created certificates on drachtio server, set the config `sbc.sip.ssl.enabled` to `true`:
 
 ```yaml
-      spec:
-          template: 
-              spec: 
-                  volumes:
-                      - name: drachtio-certs
-                        secret:
-                          secretName: drachtio-certs
-                          items:
-                            - key: tls.crt
-                              path: tls.crt
-                            - key: tls.key
-                              path: tls.key
-                          defaultMode: 420
-                  containers:
-                      - name: drachtio
-                        ...
-                        volumeMounts:
-                        - name: drachtio-certs
-                          mountPath: /etc/letsencrypt/
-                        env:
-                          - name: DRACHTIO_TLS_CERT_FILE
-                            value: /etc/letsencrypt/tls.crt
-                          - name: DRACHTIO_TLS_KEY_FILE
-                            value: /etc/letsencrypt/tls.key
-                          - name: WSS_PORT
-                            value: "8443"
-                          ...
+sbc:
+  sip:
+    ssl:
+      enabled: true
 ```
 
-This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests. 
+This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests.
+
+> Note: you must be running drachtio server version 0.8.17-rc1 or later for support of the WSS_SIP env variable.

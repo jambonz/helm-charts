@@ -79,6 +79,14 @@ spec:
               value: {{ required "cloud provider name" .Values.cloud | quote }}
             - name: IMDSv2 
               value: {{ .Values.awsUseIMDSv2 | quote }}
+            {{- if .Values.sbc.sip.ssl.enabled }}
+            - name: DRACHTIO_TLS_CERT_FILE
+              value: /etc/ssl/tls.crt
+            - name: DRACHTIO_TLS_KEY_FILE
+              value: /etc/ssl/tls.key
+            - name: WSS_PORT
+              value: "8443"
+            {{- end }}
           ports:
             - containerPort: 9022
               protocol: TCP
@@ -86,11 +94,19 @@ spec:
               protocol: UDP
             - containerPort: 5060
               protocol: TCP
+            {{- if .Values.sbc.sip.ssl.enabled }}
+            - containerPort: 8443
+              protocol: TCP
+            {{- end }}
           resources: {}
           volumeMounts:
             - mountPath: /etc/drachtio.conf.xml
               name: jambonz-sbc-sip-conf
               subPath: drachtio.conf.xml
+            {{- if .Values.sbc.sip.ssl.enabled }}
+            - mountPath: /etc/ssl/
+              name: drachtio-certs
+            {{- end }}
         - name: sbc-options-handler
           image: {{ .Values.sbcOptionsHandler.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.sbcOptionsHandler.imagePullPolicy }} 
@@ -171,3 +187,13 @@ spec:
           items:
           - key: drachtio.conf.xml
             path: drachtio.conf.xml
+      {{- if .Values.sbc.sip.ssl.enabled }}
+      - name: drachtio-certs
+        secret:
+          secretName: drachtio-certs
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+      {{- end }}
