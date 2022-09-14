@@ -148,6 +148,47 @@ useHostnames set to false will us the Kong IP address with prefixes.
 ```
 
 
+## Enable Call Recording
+
+To enable the recording of calls, we need an image of `jambonz/rtpengine` with the `libpcap-dev` package installed.
+
+### Generate a new image
+
+If none is available, then create one with a Dockerfile like so:
+
+``` Dockerfile
+FROM jambonz/rtpengine:0.1.3 as base
+
+RUN touch /var/lib/dpkg/status
+RUN mkdir /var/lib/dpkg/updates
+RUN mkdir /var/lib/dpkg/info
+RUN apt-get update
+RUN apt-get --assume-yes install libpcap-dev
+```
+
+### Configurations
+
+The following parameters are available to configure:
+
+|Name|Description|Default Value|
+|----|-----------|-----|
+|global.recordings.enabled|Enable the recordings on rtpengine|`false`|
+|rtpengine.recordings.pvc|PVC for the recordings|`recordings-shared-volume`|
+|rtpengine.recordings.dir|Mounted Directory in the pod for storing the recordings|`/recordings`|
+|rtpengine.recordings.method|Method for recording|`pcap`|
+
+Update `values.yaml` and set `global.recordings.enabled` to `true` to use the recordings. Ensure that the PVC is in the same namespace as the `jambonz-sbc-rtp` (defaults to `jambonz`).
+
+``` yaml
+global:
+  recordings:
+    enabled: true
+
+rtpengine:
+  image: # change the image of rtpengine to use one with the libpcap-dev package
+```
+
+
 ## Uninstalling the chart
 
 ```bash
@@ -168,6 +209,7 @@ helm uninstall -n <namespace> <release-name>
 |----|-----------|-----|
 |db.enabled|if true, install the db sub-chart|true|
 |monitoring.enabled|if true, install the monitoring sub-chart|true|
+|global.recordings.enabled|Enable call audio recordings on SBC-RTP|`false`|
 |cloud|(required) name of cloud provider, must be one of azure, aws, digitalocean, gcp, or none|""|
 |jambonz.clusterId|a short identifier for the cluster|""|
 |sbc.sip.nodeSelector.label|label name used to select sip node pool|"voip-environment"|
@@ -188,6 +230,9 @@ helm uninstall -n <namespace> <release-name>
 |rtpengine.dtmfLogPort|udp port that rtpengine sends dtmf events to|"22223"|
 |rtpengine.logLevel|rtpengine log level (1-7)|"5"|
 |rtpengine.homerId|id to apply to HEP traffic sent to homer from rtpengine|"11"|
+|rtpengine.recordings.pvc|PVC for the recordings|`recordings-shared-volume`|
+|rtpengine.recordings.dir|Mounted Directory in the pod for storing the recordings|`/recordings`|
+|rtpengine.recordings.method|Method for recording|`pcap`|
 |drachtio.image|drachtio image|drachtio/drachtio-server:latest|
 |drachtio.imagePullPolicy|drachtio image pull policy|"Always"|
 |drachtio.host|host of drachtio server|"127.0.0.1"|

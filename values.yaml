@@ -8,6 +8,8 @@ global:
   kong:
     enabled: false
     useHostnames: true 
+  recordings:
+    enabled: false
 
 db: 
   # if true, create the db subchart
@@ -70,6 +72,11 @@ rtpengine:
   dtmfLogPort:  "22223"
   loglevel: "5"
   homerId: "11"
+  # used when global.recordings.enabled is true
+  recordings:
+    pvc: recordings-shared-volume
+    dir: /recordings
+    method: pcap
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
