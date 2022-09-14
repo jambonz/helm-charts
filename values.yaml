@@ -48,6 +48,8 @@ sbc:
       label: voip-environment 
       value: sip
     toleration: sip
+    ssl:
+      enabled: false
   rtp: 
     nodeSelector: 
       label: voip-environment 
