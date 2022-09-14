@@ -74,6 +74,12 @@ spec:
             - {{ .Values.rtpengine.homerId | quote }}
             - --log-level
             - {{ default 5 .Values.rtpengine.loglevel | quote }}
+            {{- if .Values.global.recordings.enabled }}
+            - --recording-method
+            - {{ .Values.rtpengine.recordings.method }}
+            - --recording-dir
+            - {{ .Values.rtpengine.recordings.dir | quote }}
+            {{- end }}
           env:
             - name: CLOUD 
               value: {{ required "cloud provider name" .Values.cloud | quote }}
@@ -84,7 +90,18 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: DRACHTIO_SECRET
+          {{- if .Values.global.recordings.enabled }}
+          volumeMounts:
+            - mountPath: {{ .Values.rtpengine.recordings.dir | quote }}
+              name: recordings
+          {{- end }}
           ports:
             - containerPort: 22222
               protocol: TCP
+      {{- if .Values.global.recordings.enabled }}
+      volumes:
+      - name: recordings
+        persistentVolumeClaim:
+          claimName: {{ .Values.rtpengine.recordings.pvc | quote }}
+      {{- end }}
       restartPolicy: Always
