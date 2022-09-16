@@ -53,6 +53,8 @@ spec:
               value: "1"
             - name: JAMBONES_LOGLEVEL
               value: info
+            - name: JAMBONES_TRACK_ACCOUNT_CALLS
+              value: {{ default "0" .Values.sbcOutbound.trackAccountCalls | quote }}
             - name: DRACHTIO_PORT
               value: {{ .Values.sbcOutbound.drachtioPort | quote }}
             - name: DTMF_LISTEN_PORT

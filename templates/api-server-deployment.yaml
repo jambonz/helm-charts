@@ -50,6 +50,8 @@ spec:
               value: info
             - name: JAMBONES_TIME_SERIES_HOST 
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: JAMBONES_TRUST_PROXY
+              value: "1"
             - name: HOMER_BASE_URL
               value: http://homer-webapp.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: HOMER_USERNAME
