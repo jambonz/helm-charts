@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-create
+  name: db-create-{{ .Release.Revision }}
   namespace: {{ dig "global" "db" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
   labels:
 {{ include "common.labels" . | indent 4 }}
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: db 
-          image: jambonz/db-create:0.7.6-rc7
+          image: jambonz/db-create:0.7.6
           env:
             - name: JAMBONES_MYSQL_HOST
               value: {{ .Values.mysql.host }}
