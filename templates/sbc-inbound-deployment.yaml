@@ -51,8 +51,12 @@ spec:
               value: production
             - name: K8S 
               value: "1"
+            - name: JAMBONES_TRACK_SP_CALLS
+              value: {{ default "0" .Values.global.track.serviceProviderCalls | quote }}
             - name: JAMBONES_TRACK_ACCOUNT_CALLS
-              value: {{ default "0" .Values.sbcInbound.trackAccountCalls | quote }}
+              value: {{ default "0" .Values.global.track.accountCalls | quote }}
+            - name: JAMBONES_TRACK_APP_CALLS
+              value: {{ default "0" .Values.global.track.applicationCalls | quote }}
             - name: JAMBONES_LOGLEVEL
               value: info
             - name: DTMF_LISTEN_PORT
