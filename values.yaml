@@ -59,7 +59,12 @@ sbc:
       label: voip-environment 
       value: rtp
     toleration: rtp
-    
+    # enable it only if the recordings are also enabled
+    statefulset:
+      enabled: false
+      # match this value with the number of jambonz-rtp daemonsets/nodes
+      replicas: 1
+
 # information used by the Node.js apps to write statsd to a telegraf listening instance
 stats: 
   enabled: "1"
@@ -83,6 +88,7 @@ rtpengine:
     pvc: recordings-shared-volume
     dir: /recordings
     method: pcap
+    storage: 10Gi
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
@@ -107,6 +113,7 @@ mysql:
   host: mysql 
   database: jambones
   user: jambones 
+  # used when the rtp is in StatefulSet mode (sbc.rtp.statefulset.enabled is true)
   storage: 10Gi
 
 # redis configuration used by Node.js app that need to connect

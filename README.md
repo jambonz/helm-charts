@@ -218,6 +218,11 @@ helm uninstall -n <namespace> <release-name>
 |sbc.rtp.nodeSelector.label|label name used to select sip node pool|"voip-environment"|
 |sbc.rtp.nodeSelector.value|label value used to select sip node pool|"rtp"|
 |sbc.rtp.toleration|taint assigned to sip node pool|"rtp"|
+|sbc.rtp.extraVolumes|list of volumes to add to the sbc-rtp definition of volumes||
+|sbc.rtp.extraInitContainers|list of initContainers to add to the sbc-rtp definition of initContainers||
+|sbc.rtp.extraContainers|list of sidecars to add to the sbc-rtp definition of containers||
+|sbc.rtp.statefulset.enabled|use a StatefulSet instead of DaemonSet for the sbc-rtp|`false`|
+|sbc.rtp.statefulset.replicas|number of replicas for the StatefulSet|`1`|
 |stats.enabled|if set, jambonz apps write stats to telegraf|"1"|
 |stats.host|telegraf service name|"telegraf"|
 |stats.port|telegraf service listening port|"8125"|
@@ -233,6 +238,7 @@ helm uninstall -n <namespace> <release-name>
 |rtpengine.recordings.pvc|PVC for the recordings|`recordings-shared-volume`|
 |rtpengine.recordings.dir|Mounted Directory in the pod for storing the recordings|`/recordings`|
 |rtpengine.recordings.method|Method for recording|`pcap`|
+|rtpengine.recordings.storage|Amount of storage for the recordings volume|`10Gi`|
 |drachtio.image|drachtio image|drachtio/drachtio-server:latest|
 |drachtio.imagePullPolicy|drachtio image pull policy|"Always"|
 |drachtio.host|host of drachtio server|"127.0.0.1"|

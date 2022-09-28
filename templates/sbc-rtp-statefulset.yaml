@@ -1,6 +1,6 @@
-{{- if not .Values.sbc.rtp.statefulset.enabled }}
+{{- if .Values.sbc.rtp.statefulset.enabled }}
 apiVersion: apps/v1
-kind: DaemonSet
+kind: StatefulSet
 metadata:
   namespace: {{ .Release.Namespace | quote }}
   name: jambonz-sbc-rtp
@@ -10,6 +10,8 @@ metadata:
   annotations:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
 spec:
+  serviceName: jambonz-sbc-rtp
+  replicas: {{ .Values.sbc.rtp.statefulset.replicas }}
   selector:
     matchLabels:
       app: jambonz-sbc-rtp
@@ -99,11 +101,15 @@ spec:
           ports:
             - containerPort: 22222
               protocol: TCP
-      {{- if .Values.global.recordings.enabled }}
-      volumes:
-      - name: recordings
-        persistentVolumeClaim:
-          claimName: {{ .Values.rtpengine.recordings.pvc | quote }}
-      {{- end }}
       restartPolicy: Always
+  {{- if .Values.global.recordings.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: recordings
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: {{ .Values.rtpengine.recordings.storage }}
+  {{- end }}
 {{- end }}
