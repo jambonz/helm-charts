@@ -107,13 +107,15 @@ spec:
             - mountPath: /etc/ssl/
               name: drachtio-certs
             {{- end }}
-        - name: sbc-sip-sidecar
+        - name: sidecar
           image: {{ .Values.sbcSipSidecar.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.sbcSipSidecar.imagePullPolicy }} 
           env:
             - name: NODE_ENV
               value: production
             - name: K8S 
+              value: "1"
+            - name: JAMBONES_REGBOT_CONTACT_USE_IP
               value: "1"
             - name: JAMBONES_LOGLEVEL
               value: info
