@@ -141,11 +141,6 @@ smpp:
   image: jambonz/smpp-esme:0.7.7-rc4
   imagePullPolicy: Always
 
-# sbc-options-handler configuration
-sbcOptionsHandler: 
-  image: jambonz/sbc-options-handler:0.7.7-rc4
-  imagePullPolicy: Always
-
 # sbc-inbound configuration
 sbcInbound: 
   image: jambonz/sbc-inbound:0.7.7-rc4
@@ -160,12 +155,10 @@ sbcOutbound:
   drachtioPort: "4000"
   replicas: 1
 
-# sbc-registrar configuration
-sbcRegistrar: 
-  image: jambonz/sbc-registrar:0.7.7-rc4
+# sbc-sip-sidecar configuration
+sbcSipSidecar:
+  image: jambonz/sbc-sip-sidecar:latest
   imagePullPolicy: Always
-  drachtioPort: "4000"
-  replicas: 1
 
 # sbc-call-router configuration
 sbcCallRouter: 

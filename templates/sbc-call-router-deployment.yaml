@@ -31,7 +31,5 @@ spec:
               value: sbc-inbound:4000
             - name: K8S_SBC_OUTBOUND_SERVICE_NAME
               value: sbc-outbound:4000
-            - name: K8S_SBC_REGISTER_SERVICE_NAME
-              value: sbc-registrar:4000
             - name: HTTP_PORT
               value: {{ .Values.sbcCallRouter.httpPort | quote }}
