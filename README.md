@@ -255,17 +255,14 @@ helm uninstall -n <namespace> <release-name>
 |webapp.image|jambonz webapp image|jambonz/webapp:latest|
 |webapp.imagePullPolicy|jambonz webapp image pull policy|"Always"|
 |webapp.hostname|(required ) FQDN for webapp ingress controller|""|
-|sbcOptionsHandler.image|sbc-options-handler image|jambonz/sbc-options-handler:latest|
-|sbcOptionsHandler.imagePullPolicy|sbc-options-handler image pull policy|"Always"|
 |sbcInbound.image|sbc-inbound image|jambonz/sbc-inbound:latest|
 |sbcInbound.imagePullPolicy|sbc-inbound image pull policy|"Always"|
 |sbcOutbound.drachtioPort|port to listen on for outbound connections from drachtio|"4000"|
 |sbcOutbound.image|sbc-outbound image|jambonz/sbc-outbound:latest|
 |sbcOutbound.imagePullPolicy|sbc-outbound image pull policy|"Always"|
 |sbcOutbound.drachtioPort|port to listen on for outbound connections from drachtio|"4000"|
-|sbcRegistrar.image|sbc-registrar image|jambonz/sbc-registrar:latest|
-|sbcRegistrar.imagePullPolicy|sbc-registrar image pull policy|"Always"|
-|sbcRegistrar.drachtioPort|port to listen on for outbound connections from drachtio|"4000"|
+|sbcSipSidecar.image|sbc-sip-sidecar image|jambonz/sbc-sip-sidecar:latest|
+|sbcSipSidecar.imagePullPolicy|sbc-sip-sidecar image pull policy|"Always"|
 |sbcCallRouter.image|sbc-call-router image|jambonz/sbc-call-router:latest|
 |sbcCallRouter.imagePullPolicy|sbc-call-router image pull policy|"Always"|
 |sbcCallRouter.drachtioPort|port to listen on for http connections from drachtio|"3000"|

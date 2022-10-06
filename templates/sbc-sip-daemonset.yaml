@@ -107,13 +107,15 @@ spec:
             - mountPath: /etc/ssl/
               name: drachtio-certs
             {{- end }}
-        - name: sbc-options-handler
-          image: {{ .Values.sbcOptionsHandler.image }}
-          imagePullPolicy: {{ default "IfNotPresent" .Values.sbcOptionsHandler.imagePullPolicy }} 
+        - name: sidecar
+          image: {{ .Values.sbcSipSidecar.image }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.sbcSipSidecar.imagePullPolicy }} 
           env:
             - name: NODE_ENV
               value: production
             - name: K8S 
+              value: "1"
+            - name: JAMBONES_REGBOT_CONTACT_USE_IP
               value: "1"
             - name: JAMBONES_LOGLEVEL
               value: info
@@ -132,6 +134,22 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: MYSQL_PASSWORD
+            - name: JAMBONES_TIME_SERIES_HOST
+              value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: ENABLE_METRICS
+              value: {{ default "0" .Values.stats.enabled  | quote }}
+            {{- if .Values.stats.enabled }}
+            - name: STATS_HOST
+              value: {{ .Values.stats.host }}.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: STATS_PORT
+              value: {{ .Values.stats.port  | quote }}
+            - name: STATS_PROTOCOL
+              value: {{ .Values.stats.protocol }}
+            - name: STATS_TELEGRAF
+              value: "1"
+            - name: STATS_SAMPLE_RATE
+              value:  {{ .Values.stats.sampleRate | quote }}
+            {{- end }}
             - name: DRACHTIO_HOST
               value: 127.0.0.1
             - name: DRACHTIO_SECRET
@@ -139,6 +157,8 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: DRACHTIO_SECRET
+            - name: DRACHTIO_PORT
+              value: "9022"
         - name: smpp
           image: {{ .Values.smpp.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.smpp.imagePullPolicy }} 
