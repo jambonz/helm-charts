@@ -95,7 +95,7 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.14
+  image: drachtio/drachtio-freeswitch-mrf:0.4.15
   imagePullPolicy: IfNotPresent
   args:
     - freeswitch
