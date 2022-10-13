@@ -28,6 +28,10 @@ spec:
         - key: {{ .Values.sbc.rtp.toleration | quote }}
           operator: "Exists"
           effect: "NoSchedule"
+      volumes:
+{{- if .Values.sbc.rtp.extraVolumes }}
+{{ toYaml .Values.sbc.rtp.extraVolumes | default "" | nindent 8 }}
+{{- end }}
       initContainers:
         - image: kanisterio/mysql-sidecar:0.40.0
           name: db-create-wait
@@ -45,6 +49,9 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: MYSQL_PASSWORD
+{{- if .Values.sbc.rtp.extraInitContainers }}
+{{ toYaml .Values.sbc.rtp.extraInitContainers | default "" | nindent 8 }}
+{{- end }}
       containers:
         - name: rtpengine-sidecar
           image: {{ .Values.rtpengine.sidecarImage }}
@@ -101,6 +108,9 @@ spec:
           ports:
             - containerPort: 22222
               protocol: TCP
+{{- if .Values.sbc.rtp.extraContainers }}
+{{ toYaml .Values.sbc.rtp.extraContainers | default "" | nindent 8 }}
+{{- end }}
       restartPolicy: Always
   {{- if .Values.global.recordings.enabled }}
   volumeClaimTemplates:

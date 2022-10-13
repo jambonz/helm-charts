@@ -59,10 +59,16 @@ sbc:
       label: voip-environment 
       value: rtp
     toleration: rtp
-    # enable it only if the recordings are also enabled
+    # list of extra initContainers
+    extraInitContainers:
+    # list of extra containers/sidecars
+    extraContainers:
+    # list of extra volumes
+    extraVolumes:
     statefulset:
+      # enable it only if the recordings are also enabled
       enabled: false
-      # match this value with the number of jambonz-rtp daemonsets/nodes
+      # match this value with the number of jambonz-rtp nodes
       replicas: 1
 
 # information used by the Node.js apps to write statsd to a telegraf listening instance
