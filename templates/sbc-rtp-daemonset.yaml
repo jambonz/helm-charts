@@ -26,6 +26,9 @@ spec:
         - key: {{ .Values.sbc.rtp.toleration | quote }}
           operator: "Exists"
           effect: "NoSchedule"
+{{- if .Values.sbc.rtp.serviceAccountName }}
+      serviceAccountName: {{ .Values.sbc.rtp.serviceAccountName | quote }}
+{{- end }}
       volumes:
 {{- if .Values.sbc.rtp.extraVolumes }}
 {{ toYaml .Values.sbc.rtp.extraVolumes | default "" | nindent 8 }}
