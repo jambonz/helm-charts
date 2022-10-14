@@ -218,6 +218,11 @@ helm uninstall -n <namespace> <release-name>
 |sbc.rtp.nodeSelector.label|label name used to select sip node pool|"voip-environment"|
 |sbc.rtp.nodeSelector.value|label value used to select sip node pool|"rtp"|
 |sbc.rtp.toleration|taint assigned to sip node pool|"rtp"|
+|sbc.rtp.extraInitContainers|list of initContainers to add to the sbc-rtp definition of initContainers||
+|sbc.rtp.extraContainers|list of sidecars to add to the sbc-rtp definition of containers||
+|sbc.rtp.extraVolumes|list of volumes to add to the sbc-rtp definition of volumes||
+|sbc.rtp.statefulset.enabled|use a StatefulSet instead of DaemonSet for the sbc-rtp|`false`|
+|sbc.rtp.statefulset.replicas|number of replicas for the StatefulSet|`1`|
 |stats.enabled|if set, jambonz apps write stats to telegraf|"1"|
 |stats.host|telegraf service name|"telegraf"|
 |stats.port|telegraf service listening port|"8125"|
@@ -233,6 +238,7 @@ helm uninstall -n <namespace> <release-name>
 |rtpengine.recordings.pvc|PVC for the recordings|`recordings-shared-volume`|
 |rtpengine.recordings.dir|Mounted Directory in the pod for storing the recordings|`/recordings`|
 |rtpengine.recordings.method|Method for recording|`pcap`|
+|rtpengine.recordings.storage|Amount of storage for the recordings volume|`10Gi`|
 |drachtio.image|drachtio image|drachtio/drachtio-server:latest|
 |drachtio.imagePullPolicy|drachtio image pull policy|"Always"|
 |drachtio.host|host of drachtio server|"127.0.0.1"|
@@ -322,3 +328,55 @@ sbc:
 This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests.
 
 > Note: you must be running drachtio server version 0.8.17-rc1 or later for support of the WSS_SIP env variable.
+
+### Add extra containers or volumes to the SBC-RTP
+
+It may be required to do some processing on the data produced by the RTP service, like the recordings. For these scenarios, another container needs to run along the rtp and share a volume or a secret. Add the following configurations to your yaml file like you would populate a kubernetes deployment:
+
+```yaml
+sbc:
+  rtp:
+    #nodeSelector: 
+    #  label: rtp
+    #  value: "true"
+    #toleration: rtp
+    extraInitContainers:
+    - name: init-processor
+      image: my-service/init-processor:v1.0.0
+    extraContainers:
+    - name: recordings-processor
+      env:
+      - name: SERVER_PORT
+        value: "8080"
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /app/secrets/gcp.serviceaccount.json
+      image: my-service/recordings-processor:v2.0.0
+      ports:
+      - containerPort: 8080
+        hostPort: 8080
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 50m
+          memory: 300Mi
+      volumeMounts:
+      - mountPath: /app/secrets
+        mountPropagation: None
+        name: secrets-gcp
+        readOnly: true
+      - mountPath: /usr/src/app/cache
+        mountPropagation: None
+        name: cache
+      - mountPath: /recordings # if enabled with global.recordings.enabled
+        name: recordings
+    - name: another-processor
+      image: my-service/another-processor:v3.0.0
+    extraVolumes:
+    - name: secrets-gcp
+      secret:
+        defaultMode: 420
+        optional: false
+        secretName: gcp-secret
+    - emptyDir: {}
+      name: cache
+```
