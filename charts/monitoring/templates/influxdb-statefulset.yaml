@@ -18,6 +18,10 @@ spec:
       labels:
         app: influxdb
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - image: {{ .Values.influxdb.image }}
           name: influxdb
@@ -50,6 +54,9 @@ spec:
       name: influxdb-claim
     spec:
       accessModes: ["ReadWriteOnce"]
+      {{- if .Values.storageClassName }}
+      storageClassName: {{ .Values.storageClassName }}
+      {{- end }}
       resources:
         requests:
           storage: {{ .Values.influxdb.storage }}

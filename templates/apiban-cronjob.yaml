@@ -9,6 +9,10 @@ spec:
     spec:
       template:
         spec:
+          {{- if .Values.global.affinity }}
+          affinity:
+            {{ toYaml .Values.global.affinity | default "" | nindent 12 }}
+          {{- end }}
           containers:
           - name: apiban-redis
             image: jambonz/apiban-redis:latest

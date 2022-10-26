@@ -16,6 +16,10 @@ spec:
       labels:
         app: homer-webapp
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - name: homer-webapp
           image: {{ .Values.homer.image }}

@@ -17,6 +17,10 @@ spec:
       labels:
         app: heplify-server
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - name: heplify-server
           image: {{ .Values.heplifyServer.image }}

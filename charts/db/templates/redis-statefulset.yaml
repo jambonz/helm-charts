@@ -18,6 +18,10 @@ spec:
       labels:
         app: redis
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - name: redis 
           image: {{ .Values.redis.image }}

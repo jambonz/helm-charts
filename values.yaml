@@ -14,6 +14,7 @@ global:
     serviceProviderCalls: "0"
     accountCalls: "0"
     appCalls: "0"
+  affinity:
     
 db: 
   # if true, create the db subchart

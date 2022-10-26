@@ -208,7 +208,12 @@ helm uninstall -n <namespace> <release-name>
 |Name|Description|Value|
 |----|-----------|-----|
 |db.enabled|if true, install the db sub-chart|true|
+|db.affinity|set the affinity structure for the db subchart resources||
+|db.storageClassName|set the `storageClassName` for the db subchart StatefulSet resources||
 |monitoring.enabled|if true, install the monitoring sub-chart|true|
+|monitoring.affinity|set the affinity structure for the monitoring subchart resources||
+|monitoring.storageClassName|set the `storageClassName` for the monitoring subchart StatefulSet resources||
+|global.affinity|set the affinity structure for the base chart resources||
 |global.recordings.enabled|Enable call audio recordings on SBC-RTP|`false`|
 |cloud|(required) name of cloud provider, must be one of azure, aws, digitalocean, gcp, or none|""|
 |jambonz.clusterId|a short identifier for the cluster|""|
@@ -329,6 +334,66 @@ sbc:
 This will cause drachtio to add a listener for sip over wss on port 8443 and use the provided TLS certificate and key to authenticate requests.
 
 > Note: you must be running drachtio server version 0.8.17-rc1 or later for support of the WSS_SIP env variable.
+
+### Multi-Zone
+
+A multi-zone deployment of jambonz is possible, but some changes need to be made in order to support that.
+
+#### Change the default Storage Class
+
+If your default Storage Class doesn't support a multi-zone claim by default (like it doesn't have the `volumeBindingMode: WaitForFirstConsumer` property), or you need to change it to other one, set the `storageClassName` value accordingly:
+
+```yml
+db:
+  storageClassName: "regional-storage-class"
+
+monitoring:
+  storageClassName: "another-regional-storage-class"
+```
+
+#### Affinity
+
+The Affinity is a kubernetes feature that expands the `nodeSelector` capabilities. To configure a jambonz cluster to be deployed to a set of zones, configure the `affinity` like so:
+
+```yml
+global:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+              - europe-west1-b
+              - europe-west1-c
+```
+
+The `db` and `monitoring` subcharts have both a separated affinity value that can be set:
+
+```yml
+db:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+              - europe-west1-b
+
+monitoring:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+              - europe-west1-d
+```
 
 ### Add extra containers or volumes to the SBC-RTP
 
