@@ -18,6 +18,10 @@ spec:
       labels:
         app: postgres
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - image: {{ .Values.postgres.image }}
           name: postgres

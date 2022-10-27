@@ -16,6 +16,10 @@ spec:
       labels:
         app: sbc-inbound
     spec:
+      {{- if .Values.global.affinity }}
+      affinity:
+        {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - name: sbc-inbound
           image: {{ .Values.sbcInbound.image }}

@@ -17,6 +17,10 @@ spec:
       labels:
         app: jaeger
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - name: jaeger
           image: {{ .Values.jaeger.image }}

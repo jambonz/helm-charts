@@ -20,6 +20,10 @@ spec:
       labels:
         app: jambonz-sbc-rtp
     spec:
+      {{- if .Values.global.affinity }}
+      affinity:
+        {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
+      {{- end }}
       nodeSelector:
         {{ .Values.sbc.rtp.nodeSelector.label }}: {{.Values.sbc.rtp.nodeSelector.value | quote }}
       hostNetwork: true

@@ -16,6 +16,10 @@ spec:
       labels:
         app: sbc-call-router
     spec:
+      {{- if .Values.global.affinity }}
+      affinity:
+        {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - name: sbc-call-router
           image: {{ .Values.sbcCallRouter.image }}

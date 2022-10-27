@@ -18,6 +18,10 @@ spec:
       labels:
         app: grafana
     spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
       securityContext:
           runAsUser: 472
           fsGroup: 472
@@ -97,6 +101,9 @@ spec:
       name: grafana-claim
     spec:
       accessModes: ["ReadWriteOnce"]
+      {{- if .Values.storageClassName }}
+      storageClassName: {{ .Values.storageClassName }}
+      {{- end }}
       resources:
         requests:
           storage: {{ .Values.grafana.storage }}

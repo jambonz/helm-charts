@@ -16,6 +16,10 @@ spec:
       labels:
         app: webapp
     spec:
+      {{- if .Values.global.affinity }}
+      affinity:
+        {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
+      {{- end }}
       containers:
         - env:
             - name: NODE_ENV

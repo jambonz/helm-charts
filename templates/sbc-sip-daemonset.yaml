@@ -15,6 +15,10 @@ spec:
       labels:
         app: jambonz-sbc-sip
     spec:
+      {{- if .Values.global.affinity }}
+      affinity:
+        {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
+      {{- end }}
       nodeSelector:
         {{ .Values.sbc.sip.nodeSelector.label }}: {{.Values.sbc.sip.nodeSelector.value | quote }}
       hostNetwork: true

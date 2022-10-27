@@ -16,6 +16,10 @@ spec:
       labels:
         app: api-server
     spec:
+      {{- if .Values.global.affinity }}
+      affinity:
+        {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
+      {{- end }}
       initContainers:
         - image: kanisterio/mysql-sidecar:0.40.0
           name: db-create-wait
