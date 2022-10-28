@@ -125,6 +125,9 @@ spec:
       name: recordings
     spec:
       accessModes: ["ReadWriteOnce"]
+      {{- if .Values.sbc.rtp.storageClassName }}
+      storageClassName: {{ .Values.sbc.rtp.storageClassName }}
+      {{- end }}
       resources:
         requests:
           storage: {{ .Values.rtpengine.recordings.storage }}

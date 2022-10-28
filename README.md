@@ -223,6 +223,7 @@ helm uninstall -n <namespace> <release-name>
 |sbc.rtp.nodeSelector.label|label name used to select sip node pool|"voip-environment"|
 |sbc.rtp.nodeSelector.value|label value used to select sip node pool|"rtp"|
 |sbc.rtp.toleration|taint assigned to sip node pool|"rtp"|
+|sbc.rtp.storageClassName|set the `storageClassName` for the SBC-RTP StatefulSet ||
 |sbc.rtp.serviceAccountName|service account name to be used|""|
 |sbc.rtp.extraInitContainers|list of initContainers to add to the sbc-rtp definition of initContainers||
 |sbc.rtp.extraContainers|list of sidecars to add to the sbc-rtp definition of containers||
