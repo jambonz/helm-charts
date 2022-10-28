@@ -63,6 +63,7 @@ sbc:
       label: voip-environment 
       value: rtp
     toleration: rtp
+    storageClassName:
     # list of extra initContainers
     extraInitContainers:
     # list of extra containers/sidecars
