@@ -8,6 +8,10 @@ metadata:
     kubernetes.io/ingress.class: kong
     konghq.com/strip-path: "false"
     konghq.com/plugins: ratelimit
+    {{- if .Values.global.kong.tls.enabled }}
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: {{ .Values.global.kong.tls.clusterIssuer }}
+    {{- end}}
   labels:
 {{ include "common.labels" . | indent 4 }}
 spec:
@@ -45,4 +49,15 @@ spec:
       {{- if .Values.global.kong.useHostnames }}
       host: {{ required "hostname for webapp" .Values.webapp.hostname }}
       {{- end}}
+
+{{- if .Values.global.kong.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ .Values.api.hostname }}
+    secretName: jambonz-api-tls
+  - hosts:
+    - {{ .Values.webapp.hostname }}
+    secretName: jambonz-webapp-tls
+{{- end}}
+
 {{- end}}

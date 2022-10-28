@@ -8,8 +8,10 @@ metadata:
     kubernetes.io/ingress.class: kong
     konghq.com/strip-path: "true"
     konghq.com/plugins: ratelimit
-    #konghq.com/protocols: https
-    #konghq.com/https-redirect-status-code: "301"
+    {{- if .Values.global.kong.tls.enabled }}
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: {{ .Values.global.kong.tls.clusterIssuer }}
+    {{- end}}
   labels:
 {{ include "common.labels" . | indent 4 }}
 spec:
@@ -64,6 +66,19 @@ spec:
       {{- if .Values.global.kong.useHostnames }}
       host: {{ required "hostname for jaeger" .Values.jaeger.hostname }}
       {{- end}}
+
+{{- if .Values.global.kong.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ .Values.grafana.hostname }}
+    secretName: monitoring-grafana-tls
+  - hosts:
+    - {{ .Values.homer.hostname }}
+    secretName: monitoring-homer-tls
+  - hosts:
+    - {{ .Values.jaeger.hostname }}
+    secretName: monitoring-jaeger-tls
+{{- end}}
 
 {{- end}}
       
