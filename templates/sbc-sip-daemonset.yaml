@@ -88,6 +88,8 @@ spec:
               value: /etc/ssl/tls.crt
             - name: DRACHTIO_TLS_KEY_FILE
               value: /etc/ssl/tls.key
+            - name: TLS_PORT
+              value: "5061"
             - name: WSS_PORT
               value: "8443"
             {{- end }}

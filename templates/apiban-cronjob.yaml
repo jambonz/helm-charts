@@ -26,5 +26,7 @@ spec:
               value: {{ .Values.redis.port | quote }}
             - name: APIBAN_API_KEY
               value: {{ .Values.apiban.apiKey | quote }}
+            - name: APIBAN_FOREVER_BLOCK_RANGES
+              value: {{ .Values.apiban.foreverBlockRanges | quote }}
           restartPolicy: Never
 {{- end }} 
