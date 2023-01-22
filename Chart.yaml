@@ -1,11 +1,11 @@
 apiVersion: v2
 name: jambonz
-version: 0.1.21
-appVersion: 0.7.8
+version: 0.1.22
+appVersion: 0.7.9
 description: open source CPaaS for communication service providers
 dependencies: 
   - name: db 
-    version: 0.1.3
+    version: 0.1.4
     condition: db.enabled
   - name: monitoring 
     version: 0.1.3
