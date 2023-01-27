@@ -55,6 +55,10 @@ spec:
               value: production
             - name: K8S 
               value: "1"
+            {{- if .Values.sbcInbound.fsSignalingTransportTcp }}
+            - name: K8S_FEATURE_SERVER_TRANSPORT
+              value: "tcp"
+            {{- end }}
             - name: JAMBONES_TRACK_SP_CALLS
               value: {{ default "0" .Values.global.track.serviceProviderCalls | quote }}
             - name: JAMBONES_TRACK_ACCOUNT_CALLS
