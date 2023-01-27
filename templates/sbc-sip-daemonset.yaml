@@ -69,6 +69,11 @@ spec:
             - --blacklist-redis-key
             - {{ .Values.apiban.redisKey | quote }}
 {{- end }}
+{{- if .Values.sbcInbound.fsSignalingTransportTcp }}
+            - --contact
+            - "sip:*:5062;transport=tcp"
+{{- end }}
+
           env:
             - name: DRACHTIO_SECRET
               valueFrom:
