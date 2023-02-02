@@ -89,7 +89,7 @@ stats:
 rtpengine: 
   image: jambonz/rtpengine:0.1.4
   imagePullPolicy: IfNotPresent
-  sidecarImage: jambonz/rtpengine-sidecar:0.7.11
+  sidecarImage: jambonz/rtpengine-sidecar:0.7.12
   sidecarImagePullPolicy: IfNotPresent
   dtmfLogPort:  "22223"
   loglevel: "5"
@@ -135,7 +135,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.7.11
+  image: jambonz/api-server:0.7.12
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
@@ -147,7 +147,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.7.11
+  image: jambonz/webapp:0.7.12
   imagePullPolicy: IfNotPresent
   replicas: 1
   
@@ -156,39 +156,38 @@ webapp:
 
 # 
 smpp:
-  image: jambonz/smpp-esme:0.7.11
+  image: jambonz/smpp-esme:0.7.12
   imagePullPolicy: IfNotPresent
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.7.11
+  image: jambonz/sbc-inbound:0.7.12
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
-  fsSignalingTransportTcp: true
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.7.11
+  image: jambonz/sbc-outbound:0.7.12
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-sip-sidecar configuration
 sbcSipSidecar:
-  image: jambonz/sbc-sip-sidecar:0.7.11
+  image: jambonz/sbc-sip-sidecar:0.7.12
   imagePullPolicy: IfNotPresent
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.7.11
+  image: jambonz/sbc-call-router:0.7.12
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.7.11
+  image: jambonz/feature-server:0.7.12
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   drachtioConnection: "127.0.0.1:9022:cymru"
