@@ -24,7 +24,7 @@ spec:
         - env:
             - name: NODE_ENV
               value: production
-            - name: REACT_APP_API_BASE_URL
+            - name: API_BASE_URL
               {{- if .Values.global.kong.enabled }}
               {{- if .Values.global.kong.useHostnames }}            
               value: {{ default "http" .Values.api.protocol }}://{{ .Values.api.hostname }}/v1
