@@ -147,7 +147,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.8.0-rc5
+  image: jambonz/webapp:0.8.0-rc17
   imagePullPolicy: IfNotPresent
   replicas: 1
   
