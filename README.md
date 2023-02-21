@@ -12,7 +12,7 @@ Having installed it, you can list its charts, of which there is just one:
 ```bash
 $ helm search repo jambonz
 NAME           	CHART VERSION	APP VERSION	DESCRIPTION
-jambonz/jambonz	0.1.8        	0.7.4  	open source CPaaS for communication service pro...
+jambonz/jambonz	0.1.23       	0.8.0      	open source CPaaS for communication service pro...
 ```
 
 ## Introduction
