@@ -89,7 +89,7 @@ stats:
 rtpengine: 
   image: jambonz/rtpengine:0.1.5
   imagePullPolicy: IfNotPresent
-  sidecarImage: jambonz/rtpengine-sidecar:0.8.1
+  sidecarImage: jambonz/rtpengine-sidecar:0.8.2-rc3
   sidecarImagePullPolicy: IfNotPresent
   dtmfLogPort:  "22223"
   loglevel: "5"
@@ -112,7 +112,7 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.23
+  image: drachtio/drachtio-freeswitch-mrf:0.4.26
   imagePullPolicy: IfNotPresent
   args:
     - freeswitch
@@ -135,7 +135,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.8.1
+  image: jambonz/api-server:0.8.2-rc3
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
@@ -147,7 +147,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.8.1
+  image: jambonz/webapp:0.8.2-rc3
   imagePullPolicy: IfNotPresent
   replicas: 1
   
@@ -156,38 +156,38 @@ webapp:
 
 # 
 smpp:
-  image: jambonz/smpp-esme:0.8.1
+  image: jambonz/smpp-esme:0.8.2-rc3
   imagePullPolicy: IfNotPresent
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.8.1
+  image: jambonz/sbc-inbound:0.8.2-rc3
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.8.1
+  image: jambonz/sbc-outbound:0.8.2-rc3
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-sip-sidecar configuration
 sbcSipSidecar:
-  image: jambonz/sbc-sip-sidecar:0.8.1
+  image: jambonz/sbc-sip-sidecar:0.8.2-rc3
   imagePullPolicy: IfNotPresent
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.8.1
+  image: jambonz/sbc-call-router:0.8.2-rc3
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.8.1
+  image: jambonz/feature-server:0.8.2-rc3
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   drachtioConnection: "127.0.0.1:9022:cymru"
