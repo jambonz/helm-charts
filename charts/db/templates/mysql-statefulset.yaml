@@ -28,8 +28,6 @@ spec:
           args:
             - "--ignore-db-dir=lost+found"
           env:
-            - name: MYSQL_ALLOW_EMPTY_PASSWORD
-              value: "yes"
             - name: MYSQL_DATABASE
               value: {{ .Values.mysql.database }}
             - name: MYSQL_PASSWORD
