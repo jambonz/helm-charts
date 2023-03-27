@@ -270,6 +270,7 @@ helm uninstall -n <namespace> <release-name>
 |mysql.database|jambonz database|"jambones"|
 |mysql.user|mysql user|"jambones"|
 |mysql.storage|amount of storage to allocate for mysql database|"10Gi"|
+|mysql.rootSecret|if set, use it for the root password||
 |redis.image|redis image|redis:alpine|
 |redis.host|redis service name|"redis"|
 |redis.port|redis listening port|"6379"|

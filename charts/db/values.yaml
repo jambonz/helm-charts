@@ -5,6 +5,8 @@ mysql:
   database: jambones
   user: jambones 
   storage: 10Gi
+  # if empty, an empty password is used for the root user using MYSQL_ALLOW_EMPTY_PASSWORD
+  rootSecret:
   secret: amFtYm9uZXM=
 # redis configuration used by Node.js app that need to connect
 redis: 
