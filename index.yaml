@@ -2,8 +2,39 @@ apiVersion: v1
 entries:
   jambonz:
   - apiVersion: v2
+    appVersion: 0.8.2
+    created: "2023-04-01T14:09:07.130103-04:00"
+    dependencies:
+    - condition: db.enabled
+      name: db
+      repository: ""
+      version: 0.1.4
+    - condition: monitoring.enabled
+      name: monitoring
+      repository: ""
+      version: 0.1.3
+    description: open source CPaaS for communication service providers
+    digest: 31dc240165c7044334c4ec20327cc562dc3cdb371fafaf03ede9b87484255b0e
+    home: https://jambonz.org
+    keywords:
+    - voip
+    - cpaas
+    - webRTC
+    - sip
+    - rtp
+    maintainers:
+    - email: daveh@drachtio.org
+      name: Dave Horton
+    name: jambonz
+    sources:
+    - https://github.com/jambonz/helm-charts
+    - https://github.com/jambonz/jambonz-infrastructure
+    urls:
+    - jambonz-0.1.25.tgz
+    version: 0.1.25
+  - apiVersion: v2
     appVersion: 0.8.1
-    created: "2023-02-25T11:31:30.129705-05:00"
+    created: "2023-04-01T14:09:07.128505-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -34,7 +65,7 @@ entries:
     version: 0.1.24
   - apiVersion: v2
     appVersion: 0.8.0
-    created: "2023-02-25T11:31:30.128081-05:00"
+    created: "2023-04-01T14:09:07.126424-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -65,7 +96,7 @@ entries:
     version: 0.1.23
   - apiVersion: v2
     appVersion: 0.7.9
-    created: "2023-02-25T11:31:30.12611-05:00"
+    created: "2023-04-01T14:09:07.124167-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -96,7 +127,7 @@ entries:
     version: 0.1.22
   - apiVersion: v2
     appVersion: 0.7.8
-    created: "2023-02-25T11:31:30.124071-05:00"
+    created: "2023-04-01T14:09:07.121153-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -127,7 +158,7 @@ entries:
     version: 0.1.21
   - apiVersion: v2
     appVersion: 0.7.7
-    created: "2023-02-25T11:31:30.121566-05:00"
+    created: "2023-04-01T14:09:07.118795-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -158,7 +189,7 @@ entries:
     version: 0.1.20
   - apiVersion: v2
     appVersion: 0.7.6
-    created: "2023-02-25T11:31:30.117188-05:00"
+    created: "2023-04-01T14:09:07.11322-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -189,7 +220,7 @@ entries:
     version: 0.1.19
   - apiVersion: v2
     appVersion: 0.7.5
-    created: "2023-02-25T11:31:30.115283-05:00"
+    created: "2023-04-01T14:09:07.110895-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -220,7 +251,7 @@ entries:
     version: 0.1.18
   - apiVersion: v2
     appVersion: 0.7.5
-    created: "2023-02-25T11:31:30.112489-05:00"
+    created: "2023-04-01T14:09:07.108832-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -251,7 +282,7 @@ entries:
     version: 0.1.17
   - apiVersion: v2
     appVersion: 0.7.4
-    created: "2023-02-25T11:31:30.144221-05:00"
+    created: "2023-04-01T14:09:07.146227-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -282,7 +313,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: 0.7.4
-    created: "2023-02-25T11:31:30.14257-05:00"
+    created: "2023-04-01T14:09:07.144238-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -313,7 +344,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 0.7.4
-    created: "2023-02-25T11:31:30.140746-05:00"
+    created: "2023-04-01T14:09:07.142273-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -344,7 +375,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 0.7.4-rc1
-    created: "2023-02-25T11:31:30.1389-05:00"
+    created: "2023-04-01T14:09:07.140364-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -375,7 +406,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 0.7.4-rc1
-    created: "2023-02-25T11:31:30.137163-05:00"
+    created: "2023-04-01T14:09:07.13835-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -406,7 +437,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 0.7.4-rc1
-    created: "2023-02-25T11:31:30.133251-05:00"
+    created: "2023-04-01T14:09:07.133549-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -437,7 +468,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.7.3
-    created: "2023-02-25T11:31:30.119596-05:00"
+    created: "2023-04-01T14:09:07.116588-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -468,7 +499,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.7.2
-    created: "2023-02-25T11:31:30.110598-05:00"
+    created: "2023-04-01T14:09:07.106748-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -498,7 +529,7 @@ entries:
     - jambonz-0.1.1.tgz
     version: 0.1.1
   - apiVersion: v2
-    created: "2023-02-25T11:31:30.10809-05:00"
+    created: "2023-04-01T14:09:07.10363-04:00"
     dependencies:
     - condition: db.enabled
       name: db
@@ -527,4 +558,4 @@ entries:
     urls:
     - jambonz-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-25T11:31:30.105614-05:00"
+generated: "2023-04-01T14:09:07.10164-04:00"

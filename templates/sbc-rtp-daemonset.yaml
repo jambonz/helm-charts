@@ -67,13 +67,29 @@ spec:
             - name: K8S 
               value: "1"
             - name: JAMBONES_LOGLEVEL
-              value: info
+              value: debug
             - name: JAMBONES_REDIS_HOST
               value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
             - name: JAMBONES_REDIS_PORT
               value: {{ .Values.redis.port | quote }}
             - name: RTPENGINE_DTMF_LOG_PORT
               value: {{ .Values.rtpengine.dtmfLogPort | quote }}
+            - name: RTPENGINE_URL
+              value: {{ .Values.rtpengine.wsUrl | quote }}
+            - name: ENABLE_METRICS
+              value: {{ default "0" .Values.stats.enabled  | quote }}
+            {{- if .Values.stats.enabled }}
+            - name: STATS_HOST
+              value: {{ .Values.stats.host }}.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+            - name: STATS_PORT
+              value: {{ .Values.stats.port  | quote }}
+            - name: STATS_PROTOCOL
+              value: {{ .Values.stats.protocol }}
+            - name: STATS_TELEGRAF
+              value: "1"
+            - name: STATS_SAMPLE_RATE
+              value:  {{ .Values.stats.sampleRate | quote }}
+            {{- end }}
         - name: rtpengine 
           image: {{ .Values.rtpengine.image }}
           imagePullPolicy: {{ .Values.rtpengine.imagePullPolicy }}
