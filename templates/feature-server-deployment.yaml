@@ -151,22 +151,22 @@ spec:
             - name: JAMBONZ_CLEANUP_INTERVAL_MINS
               value: "60"
             {{- if .Values.stats.enabled }}
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: STATS_HOST
               value: {{ .Values.stats.host }}.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: STATS_PORT
               value: {{ .Values.stats.port  | quote }}
             - name: STATS_TAGS
-              value: "host:$(K8S_POD_NAME)"
+              value: "pod:$(K8S_POD_NAME)"
             - name: STATS_PROTOCOL
               value: {{ .Values.stats.protocol }}
             - name: STATS_TELEGRAF
               value: "1"
             - name: STATS_SAMPLE_RATE
               value:  {{ .Values.stats.sampleRate | quote }}
-            - name: K8S_POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
             {{- end }}
             - name: JAMBONES_OTEL_ENABLED
               value: "1" 

@@ -103,7 +103,7 @@ rtpengine:
 
 # used by sidecar apps in sbc-sip and feature-server to connect locally to drachtio server
 drachtio: 
-  image: drachtio/drachtio-server:0.8.21
+  image: drachtio/drachtio-server:0.8.2
   imagePullPolicy: IfNotPresent
   host: "127.0.0.1"
   port: "9022"
@@ -135,7 +135,7 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.8.2
+  image: jambonz/api-server:latest
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
@@ -147,7 +147,7 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.8.2
+  image: jambonz/webapp:latest
   imagePullPolicy: IfNotPresent
   replicas: 1
   
@@ -156,38 +156,38 @@ webapp:
 
 # 
 smpp:
-  image: jambonz/smpp-esme:0.8.2
+  image: jambonz/smpp-esme:latest
   imagePullPolicy: IfNotPresent
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.8.2
+  image: jambonz/sbc-inbound:latest
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.8.2
+  image: jambonz/sbc-outbound:latest
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-sip-sidecar configuration
 sbcSipSidecar:
-  image: jambonz/sbc-sip-sidecar:0.8.2
+  image: jambonz/sbc-sip-sidecar:latest
   imagePullPolicy: IfNotPresent
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.8.2
+  image: jambonz/sbc-call-router:latest
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.8.2
+  image: jambonz/feature-server:latest
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   drachtioConnection: "127.0.0.1:9022:cymru"

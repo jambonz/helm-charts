@@ -78,6 +78,10 @@ spec:
             - name: ENABLE_METRICS
               value: {{ default "0" .Values.stats.enabled  | quote }}
             {{- if .Values.stats.enabled }}
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: STATS_HOST
               value: {{ .Values.stats.host }}.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: STATS_PORT
@@ -90,10 +94,6 @@ spec:
               value: "1"
             - name: STATS_SAMPLE_RATE
               value:  {{ .Values.stats.sampleRate | quote }}
-            - name: K8S_POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
             {{- end }}
             - name: JAMBONES_MYSQL_DATABASE
               value: {{ .Values.mysql.database }}
