@@ -135,7 +135,7 @@ spec:
             - name: K8S 
               value: "1"
             - name: K8S_SBC_SIP_SERVICE_NAME 
-              value: sbc-sip.{{ .Release.Namespace }}
+              value: sbc-sip
             - name: JAMBONES_API_BASE_URL
               value: http://{{ .Values.api.hostname }}/v1
             - name: JAMBONES_TIME_SERIES_HOST 
