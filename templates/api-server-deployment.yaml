@@ -59,7 +59,7 @@ spec:
             - name: HOMER_BASE_URL
               value: http://homer-webapp.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: JAEGER_BASE_URL
-              value: http://jaeger.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+              value: http://jaeger.{{ default .Release.Namespace .Values.global.monitoring.namespace }}:16686
             - name: HOMER_USERNAME
               value: admin
             - name: HOMER_PASSWORD
