@@ -1,9 +1,9 @@
 dependencies:
 - name: db
   repository: ""
-  version: 0.1.0
+  version: 0.1.3
 - name: monitoring
   repository: ""
-  version: 0.1.0
-digest: sha256:4551e6eee2b526ec5443f06e2c15d391c8ec1fec5a6c377011ed94f917e7a103
-generated: "2022-01-13T13:31:13.459101-05:00"
+  version: 0.1.4
+digest: sha256:9eedacbf5d1150c0aed248f7ff06c792268c29895ddf731e704ee9c529b95ed9
+generated: "2023-05-15T13:36:57.373011-04:00"

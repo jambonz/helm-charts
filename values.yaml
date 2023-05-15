@@ -3,8 +3,10 @@ global:
   # otherwise they create and/or referenced them in whatever the .Release namespace is
   db:
     namespace: 
+    createNamespace: false
   monitoring:
     namespace:
+    createNamespace: false
   kong:
     enabled: false
     useHostnames: true

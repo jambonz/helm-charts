@@ -1,6 +1,8 @@
+{{- if .Values.global.monitoring.createNamespace }}
 apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ dig "global" "db" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
   labels:
 {{ include "common.labels" . | indent 4 }}
+{{- end }}
