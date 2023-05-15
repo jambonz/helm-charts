@@ -64,36 +64,20 @@ If you don't want to install everything into a single namespace, then set the `g
 
 ## Installing the chart
 
-Here is example of installing the main chart into the "jambonz" namespace, the db subchart into the "db" namespace, and the monitoring subchart into the "monitoring" namespace.  The FQDNs for the ingress controllers created for the web portal, the API, the grafana and homer portals are also provided on the command line.  
+Here is example of installing the main chart as well as the db and monitoring sub-charts into the jambonz namespace.  The FQDNs for the ingress controllers created for the web portal, the API, the grafana and homer portals are also provided on the command line.  
 
 The cloud provider where the Kubernetes cluster is running (google, in this case) is also provided as a command line argument.  (This is needed to properly configure the [drachtio](https://drachtio.org) SIP element)
 
 ```bash
  helm install --namespace=jambonz \
  --generate-name --create-namespace \
- --set "global.db.namespace=db" \
- --set "global.monitoring.namespace=monitoring" \
  --set "monitoring.grafana.hostname=grafana.example.com" \
  --set "monitoring.homer.hostname=homer.example.com" \
- --set "monitoring.jaeger.hostname=jaeger.example.com" \
 --set "webapp.hostname=portal.example.com" \
 --set "api.hostname=api.example.com" \
 --set cloud=gcp \
 jambonz/jambonz
  ```
-
- Installing the chart into a single namespace:
-
- ```bash
-helm install --namespace=jambonz \
- --generate-name --create-namespace \
- --set "monitoring.grafana.hostname=grafana.example.com" \
- --set "monitoring.homer.hostname=homer.example.com" \
---set "webapp.hostname=portal.example.com" \
---set "api.hostname=api.example.com" \
---set cloud=gcp \
-jambonz/jambonz
-```
 
 Note that all of the above command line values are required variables.
 
