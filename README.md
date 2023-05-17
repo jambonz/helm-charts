@@ -60,7 +60,7 @@ By default, since 0.1.26 of this helm chart, everything is installed into a sing
 - `monitoring`: for the monitoring workloads
 - `jambonz`: for the core jambonz call, media, and api processing.
 
-If you don't want to install everything into a single namespace, then set the `global.db.namespace` and `global.monitoring.namespace` in values.yaml to the namespaces that you want to use for these sub-charts, and also set `global.db.createNamespace` and `global.monitoring.namespace` to true.
+If you don't want to install everything into a single namespace, then set the `global.db.namespace` and `global.monitoring.namespace` in values.yaml to the namespaces that you want to use for these sub-charts, and also set `global.db.createNamespace` and `global.monitoring.createNamespace` to true.
 
 ## Installing the chart
 
