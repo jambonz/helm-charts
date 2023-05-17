@@ -55,16 +55,16 @@ Associate a firewall rule with this node pool allowing traffic into instances in
 The database (redis+mysql) and monitoring (grafana+influxdb+telegraf+homer) components of jambonz are provided as sub-charts, which allow them to be installed as standalone charts if nececessary.
 
 ### Namespaces
-This chart provides the option of installing everything into a single namespace, or installing into three different namespaces; e.g.
+By default, since 0.1.26 of this helm chart, everything is installed into a single namespace.  However, you can optionally install the components into three different namespaces if you like, e.g.:
 - `db`: for the database workloads
 - `monitoring`: for the monitoring workloads
 - `jambonz`: for the core jambonz call, media, and api processing.
 
-If you don't want to install everything into a single namespace, then set the `global.dbNamespace` and `global.monitoringNamespace` in values.yaml to the namespaces that you want to use for these sub-charts.
+If you don't want to install everything into a single namespace, then set the `global.db.namespace` and `global.monitoring.namespace` in values.yaml to the namespaces that you want to use for these sub-charts, and also set `global.db.createNamespace` and `global.monitoring.namespace` to true.
 
 ## Installing the chart
 
-Here is example of installing the main chart as well as the db and monitoring sub-charts into the jambonz namespace.  The FQDNs for the ingress controllers created for the web portal, the API, the grafana and homer portals are also provided on the command line.  
+Here is example of installing the main chart as well as the db and monitoring sub-charts into a single namespace named 'jambonz'.  The FQDNs for the ingress controllers created for the web portal, the API, the grafana and homer portals are also provided on the command line.  
 
 The cloud provider where the Kubernetes cluster is running (google, in this case) is also provided as a command line argument.  (This is needed to properly configure the [drachtio](https://drachtio.org) SIP element)
 
@@ -80,6 +80,24 @@ jambonz/jambonz
  ```
 
 Note that all of the above command line values are required variables.
+
+And here is an example of installing into 3 different namespaces:
+```bash
+helm install --namespace=jambonz \
+--generate-name --create-namespace \
+--set "global.db.createNamespace=true" \
+--set "global.db.namespace=db" \
+--set "global.monitoring.createNamespace=true" \
+--set "global.monitoring.namespace=monitoring" \
+--set "monitoring.grafana.hostname=grafana.example.com" \
+--set "monitoring.homer.hostname=homer.example.com" \
+--set "webapp.hostname=portal.example.com" \
+--set "api.hostname=api.example.com" \
+--set cloud=gcp \
+jambonz/jambonz
+ ```
+
+
 
 Once you have installed the helm chart for the first, it will take a bit for all components to be downloaded, installed and transition to the running state.  This is because the mysql database schema will be created and seeded with initial data, any many of the Pods will wait for the database to become available (via an initContainer) before starting their containers.
 
