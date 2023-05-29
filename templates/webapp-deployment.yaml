@@ -39,6 +39,7 @@ spec:
             - name: NODE_OPTIONS
               value: '--openssl-legacy-provider'
           image:  {{ .Values.webapp.image }}
+          imagePullPolicy: {{ .Values.webapp.imagePullPolicy }}
           name: webapp
           ports:
             - containerPort: 3001
