@@ -1,6 +1,6 @@
 apiVersion: v2
 name: monitoring
-version: 0.1.4
+version: 0.1.5
 description: A grafana-based monitoring service for jambonz
 home: https://jambonz.org
 keywords:

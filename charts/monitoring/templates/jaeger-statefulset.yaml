@@ -1,3 +1,4 @@
+{{- if not .Values.global.cassandra.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -35,3 +36,4 @@ spec:
               protocol: UDP
               name: "collector"
           resources: {}
+{{- end}}

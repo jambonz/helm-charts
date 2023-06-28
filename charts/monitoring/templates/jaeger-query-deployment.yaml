@@ -1,0 +1,32 @@
+{{- if .Values.global.cassandra.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger-query
+  labels:
+    app: jaeger-query
+{{ include "common.labels" . | indent 4 }}
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger-query
+  template:
+    metadata:
+      labels:
+        app: jaeger-query
+    spec:
+      containers:
+      - name: jaeger-query
+        image: {{ .Values.jaegerQuery.image }}
+        args: ["--log-level=info", "--cassandra.servers=cassandra:9042"]
+        env:
+        - name: CASSANDRA_KEYSPACE
+          value: {{ .Values.cassandra.keyspace }}
+        - name: JAEGER_AGENT_PORT
+          value: "6831"
+        ports:
+          - containerPort: 16686
+            name: query-port
+{{- end}}

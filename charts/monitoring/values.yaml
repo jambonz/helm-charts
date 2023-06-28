@@ -8,6 +8,10 @@ influxdb:
   image: influxdb:1.8
   loglevel: info
   storage: 20Gi
+cassandra:
+  image: cassandra:3.11
+  keyspace: jaeger_v1_dc1
+  storage: 10Gi
 homer: 
   image: sipcapture/webapp:latest
   hostname:
@@ -19,6 +23,10 @@ telegraf:
 jaeger: 
   image: jaegertracing/all-in-one:1.32
   hostname: 
+jaegerCollector:
+  image: jaegertracing/jaeger-collector:1.46
+jaegerQuery:
+  image: jaegertracing/jaeger-query:1.46
 
 # Storage Class definition for the Stateful Sets
 storageClassName:

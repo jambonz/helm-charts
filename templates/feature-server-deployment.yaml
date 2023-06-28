@@ -170,8 +170,13 @@ spec:
             {{- end }}
             - name: JAMBONES_OTEL_ENABLED
               value: "1" 
+{{- if .Values.global.cassandra.enabled }}
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: http://jaeger-collector.{{ default .Release.Namespace .Values.global.monitoring.namespace }}:14268/api/traces
+{{- else }}
             - name: OTEL_EXPORTER_JAEGER_AGENT_HOST
               value: jaeger.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+{{- end }}
             - name: OTEL_TRACES_SAMPLER
               value: parentbased_traceidratio
             - name: OTEL_TRACES_SAMPLER_ARG
@@ -197,6 +202,15 @@ spec:
                   name: jambonz-secrets
                   key: DRACHTIO_SECRET
             - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: JWT_SECRET
+            - name: JAMBONZ_RECORD_WS_BASE_URL
+              value: ws://{{ .Values.api.hostname }}/api/v1
+            - name: JAMBONZ_RECORD_WS_USERNAME
+              value: jambonz
+            - name: JAMBONZ_RECORD_WS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: jambonz-secrets

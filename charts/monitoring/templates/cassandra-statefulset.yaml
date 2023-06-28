@@ -1,0 +1,49 @@
+{{- if .Values.global.cassandra.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: cassandra
+{{ include "common.labels" . | indent 4 }}
+  name: cassandra
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  serviceName: "cassandra"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cassandra
+  template:
+    metadata:
+      labels:
+        app: cassandra
+    spec:
+      {{- if .Values.affinity }}
+      affinity:
+        {{ toYaml .Values.affinity | default "" | nindent 8 }}
+      {{- end }}
+      containers:
+        - image: {{ .Values.cassandra.image }}
+          name: cassandra
+          resources: {}
+          ports:
+          - containerPort: 7000
+            name: intra-node
+          - containerPort: 7001
+            name: tls-intra-node
+          - containerPort: 7199
+            name: jmx
+          - containerPort: 9042
+            name: cql
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-claim
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      {{- if .Values.storageClassName }}
+      storageClassName: {{ .Values.storageClassName }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.cassandra.storage }}
+{{- end}}

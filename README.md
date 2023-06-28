@@ -97,8 +97,6 @@ helm install --namespace=jambonz \
 jambonz/jambonz
  ```
 
-
-
 Once you have installed the helm chart for the first, it will take a bit for all components to be downloaded, installed and transition to the running state.  This is because the mysql database schema will be created and seeded with initial data, any many of the Pods will wait for the database to become available (via an initContainer) before starting their containers.
 
 Once the system is up and running, you will want to query the 4 ingress controllers to view the the IP addresses that have been assigned.
@@ -116,6 +114,10 @@ homer-webapp   <none>   homer.example.com     35.241.2.62     80      6m10s
 ```
 
 Once you have done this you will want to create associated the DNS records in your DNS provider so that you can access these portals.
+
+## Jaeger (opentelemetry)
+
+By default, open telemetry spans are stored in cassandra and jaeger-collector and jaeger-query are used to save and retrieve the spans, respectively.  If you prefer to run a simpler jaeger-all-in-one deployment with spans stored in memory, set `global.cassandra.enabled` to false.  Please note that if you do so historical spans will be lost every time you restart jaeger.
 
 ## Using Kong API Gateway
 
@@ -149,12 +151,20 @@ useHostnames set to false will us the Kong IP address with prefixes.
 <IP>/homer
 ```
 
-
 ## Enable Call Recording
+
+There are two ways to record calls, and they can be simultaneously enabled or disabled.
+- From the portal, you can enable call recordings and listen to the recordings. Recordings are saved to an AWS S3 bucket and this must be enabled at the account level for every account that wishes to record calls.  You may record all calls for the account, or only record calls for specified applications.  This is intended to be a user-facing record option where the user is providing their own AWS S3 bucket and credentials for storage.
+- You can use rtpengine to globally record all calls handled by the system.
+
+### Call recording in the portal
+By default, call recording in the portal is enabled.  To disable it, set `webapp.disableRecording` to true.
+
+### rtpengine recording
 
 To enable the recording of calls, we need an image of `jambonz/rtpengine` with the `libpcap-dev` package installed.
 
-### Generate a new image
+#### Generate a new image
 
 If none is available, then create one with a Dockerfile like so:
 
@@ -168,7 +178,7 @@ RUN apt-get update
 RUN apt-get --assume-yes install libpcap-dev
 ```
 
-### Configurations
+#### Configurations
 
 The following parameters are available to configure:
 

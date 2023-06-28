@@ -171,6 +171,18 @@ spec:
                   key: DRACHTIO_SECRET
             - name: DRACHTIO_PORT
               value: "9022"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: JWT_SECRET
+            - name: JAMBONZ_RECORD_WS_USERNAME
+              value: jambonz
+            - name: JAMBONZ_RECORD_WS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: JWT_SECRET
         - name: smpp
           image: {{ .Values.smpp.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.smpp.imagePullPolicy }} 

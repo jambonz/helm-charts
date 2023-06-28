@@ -51,15 +51,20 @@ spec:
             - name: K8S_FEATURE_SERVER_SERVICE_NAME 
               value: "feature-server"
             - name: JAMBONES_LOGLEVEL
-              value: info
+              value: debug
             - name: JAMBONES_TIME_SERIES_HOST 
               value: influxdb.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
             - name: JAMBONES_TRUST_PROXY
               value: "2"
             - name: HOMER_BASE_URL
               value: http://homer-webapp.{{ default .Release.Namespace .Values.global.monitoring.namespace }}
+{{- if .Values.global.cassandra.enabled }}
+            - name: JAEGER_BASE_URL
+              value: http://jaeger-query.{{ default .Release.Namespace .Values.global.monitoring.namespace }}:16686
+{{- else }}
             - name: JAEGER_BASE_URL
               value: http://jaeger.{{ default .Release.Namespace .Values.global.monitoring.namespace }}:16686
+{{- end }}
             - name: HOMER_USERNAME
               value: admin
             - name: HOMER_PASSWORD
@@ -100,6 +105,13 @@ spec:
                   name: jambonz-secrets
                   key: MYSQL_PASSWORD
             - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: JWT_SECRET
+            - name: JAMBONZ_RECORD_WS_USERNAME
+              value: jambonz
+            - name: JAMBONZ_RECORD_WS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: jambonz-secrets

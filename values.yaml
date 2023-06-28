@@ -13,6 +13,8 @@ global:
     tls:
       enabled: false
       clusterIssuer: 
+  cassandra:
+    enabled: true
   recordings:
     enabled: false
   track:
@@ -91,7 +93,7 @@ stats:
 rtpengine: 
   image: jambonz/rtpengine:0.1.6
   imagePullPolicy: IfNotPresent
-  sidecarImage: jambonz/rtpengine-sidecar:0.8.3-3
+  sidecarImage: jambonz/rtpengine-sidecar:0.8.4
   sidecarImagePullPolicy: Always
   dtmfLogPort:  "22223"
   loglevel: "7"
@@ -114,7 +116,7 @@ drachtio:
 
 # freeswitch configuration
 freeswitch: 
-  image: drachtio/drachtio-freeswitch-mrf:0.4.30
+  image: drachtio/drachtio-freeswitch-mrf:0.4.32
   imagePullPolicy: IfNotPresent
   args:
     - freeswitch
@@ -137,8 +139,8 @@ redis:
 
 # configuration for jambonz-api-server
 api: 
-  image: jambonz/api-server:0.8.3-3
-  imagePullPolicy: IfNotPresent
+  image: jambonz/api-server:latest
+  imagePullPolicy: Always
   httpPort: "3000"
   replicas: 1
   # (required) hostname for the jambonz port ingress
@@ -149,47 +151,50 @@ api:
 
 # jambonz-webapp configuration
 webapp: 
-  image: jambonz/webapp:0.8.3-3
+  image: jambonz/webapp:0.8.4
   imagePullPolicy: IfNotPresent
   replicas: 1
   
   # (required) hostname for the jambonz port ingress
   hostname: 
 
+  # set to true to disable recording in the portal
+  disableRecording: false 
+
 # 
 smpp:
-  image: jambonz/smpp-esme:0.8.3-3
+  image: jambonz/smpp-esme:0.8.4
   imagePullPolicy: IfNotPresent
 
 # sbc-inbound configuration
 sbcInbound: 
-  image: jambonz/sbc-inbound:0.8.3-3
+  image: jambonz/sbc-inbound:0.8.4
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-outbound configuration
 sbcOutbound: 
-  image: jambonz/sbc-outbound:0.8.3-3
+  image: jambonz/sbc-outbound:0.8.4
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
 
 # sbc-sip-sidecar configuration
 sbcSipSidecar:
-  image: jambonz/sbc-sip-sidecar:0.8.3-3
+  image: jambonz/sbc-sip-sidecar:0.8.4
   imagePullPolicy: IfNotPresent
 
 # sbc-call-router configuration
 sbcCallRouter: 
-  image: jambonz/sbc-call-router:0.8.3-3
+  image: jambonz/sbc-call-router:0.8.4
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   replicas: 1
 
 # feature-server configuration
 featureServer: 
-  image: jambonz/feature-server:0.8.3-3
+  image: jambonz/feature-server:0.8.4
   imagePullPolicy: IfNotPresent
   httpPort: "3000"
   drachtioConnection: "127.0.0.1:9022:cymru"

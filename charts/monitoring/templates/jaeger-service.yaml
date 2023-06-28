@@ -1,3 +1,4 @@
+{{- if not .Values.global.cassandra.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -19,3 +20,4 @@ spec:
   selector:
     app: jaeger
   clusterIP: None
+{{- end}}

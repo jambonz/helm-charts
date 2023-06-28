@@ -1,0 +1,18 @@
+{{- if .Values.global.cassandra.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jaeger-query
+{{ include "common.labels" . | indent 4 }}
+  name: jaeger-query
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  selector:
+    app: jaeger-query
+  ports:
+  - name: query-port
+    port: 16686
+    targetPort: 16686
+    protocol: TCP
+{{- end}}

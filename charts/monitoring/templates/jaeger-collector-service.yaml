@@ -1,0 +1,16 @@
+{{- if .Values.global.cassandra.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-collector
+spec:
+  selector:
+    app: jaeger-collector
+  ports:
+  - name: grpc-collector-port
+    port: 14250
+  - name: http-collector-port
+    port: 14268
+  - name: healthcheck-port
+    port: 14269
+{{- end}}

@@ -34,6 +34,10 @@ spec:
               {{else}}
               value: {{ default "http" .Values.api.protocol }}://{{ .Values.api.hostname }}/v1
               {{- end}}
+            {{- if .Values.webapp.disableRecording }}
+            - name: DISABLE_CALL_RECORDING
+              value: "true"
+            {{- end }}
             - name: GF_SERVER_ROOT_URL
               value: "/grafana"
             - name: NODE_OPTIONS

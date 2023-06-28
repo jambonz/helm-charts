@@ -1,0 +1,17 @@
+{{- if .Values.global.cassandra.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cassandra
+{{ include "common.labels" . | indent 4 }}
+  name: cassandra
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+spec:
+  ports:
+    - name: "cassandra"
+      port: 9042
+  selector:
+    app: cassandra
+  clusterIP: None
+{{- end}}

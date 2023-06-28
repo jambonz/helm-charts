@@ -111,6 +111,11 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: DRACHTIO_SECRET
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jambonz-secrets
+                  key: JWT_SECRET
             - name: DRACHTIO_PORT
               value: {{ .Values.sbcInbound.drachtioPort | quote }}
       terminationGracePeriodSeconds: 900

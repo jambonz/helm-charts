@@ -1,0 +1,33 @@
+{{- if .Values.global.cassandra.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cassandra-init-job
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: cassandra-init-job
+        image:  {{ .Values.cassandra.image }}
+        env:
+        - name: CASSANDRA_SEEDS
+          value: "cassandra"
+        command:
+        - /bin/bash
+        - -c
+        - |
+          apt-get update && apt-get install -y netcat
+          echo "Waiting for Cassandra to start..."
+          while ! nc -z cassandra 9042; do sleep 1; done;
+          echo "Cassandra started"
+          echo "Executing CQL script"
+          cqlsh cassandra < /cql/init.cql
+        volumeMounts:
+        - name: cql-volume
+          mountPath: /cql
+      volumes:
+      - name: cql-volume
+        configMap:
+          name: cassandra-init-script
+{{- end}}
