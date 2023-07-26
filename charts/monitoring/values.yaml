@@ -17,6 +17,8 @@ homer:
   hostname:
 postgres: 
   image: postgres:11-alpine
+  user: cm9vdA==
+  secret: aG9tZXJTZXZlbg==
   storage: 30Gi 
 telegraf: 
   image: telegraf:1.19

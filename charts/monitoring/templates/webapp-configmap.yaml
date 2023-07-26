@@ -21,8 +21,8 @@ data:
         "keepalive": true,
         "name": "homer_config",
         "node": "LocalConfig",
-        "pass": "homerSeven",
-        "user": "root"
+        "pass": {{ .Values.postgres.secret | b64dec | quote }},
+        "user": {{ .Values.postgres.user | b64dec | quote }}
       },
       "database_data": {
         "localnode": {
@@ -31,8 +31,8 @@ data:
           "keepalive": true,
           "name": "homer_data",
           "node": "LocalNode",
-          "pass": "homerSeven",
-          "user": "root"
+          "pass": {{ .Values.postgres.secret | b64dec | quote }},
+          "user": {{ .Values.postgres.user | b64dec | quote }}
         }
       },
       "decoder_shark": {

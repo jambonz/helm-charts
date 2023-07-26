@@ -30,9 +30,12 @@ spec:
             - name: DB_HOST
               value: postgres
             - name: DB_USER
-              value: {{ .Values.postgres.user | quote }}
+              value: {{ .Values.postgres.user | b64dec | quote }}
             - name: DB_PASS
-              value: {{ .Values.postgres.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: POSTGRES_PASSWORD
           volumeMounts:
             - mountPath: /usr/local/homer/etc/webapp_config.json
               name: webapp-conf

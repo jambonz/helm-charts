@@ -25,8 +25,8 @@ data:
     DBShema               = "homer7"
     DBDriver              = "postgres"
     DBAddr                = "postgres:5432"
-    DBUser                = "root"
-    DBPass                = "homerSeven"
+    DBUser                = {{ .Values.postgres.user | b64dec | quote }}
+    DBPass                = {{ .Values.postgres.secret | b64dec | quote }}
     DBDataTable           = "homer_data"
     DBConfTable           = "homer_config"
     DBBulk                = 200

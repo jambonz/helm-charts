@@ -27,9 +27,12 @@ spec:
           name: postgres
           env:
             - name: POSTGRES_PASSWORD
-              value: homerSeven
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
-              value: root
+              value: {{ .Values.postgres.user | b64dec | quote }}
           ports:
             - containerPort: 5432
           resources: {}

@@ -30,7 +30,9 @@ db:
     secret: amFtYm9uZXM=
 monitoring: 
   # if true, create the monitoring subchart
-  enabled: true 
+  enabled: true
+  postgres: 
+    secret: amFtYm9uZXM=
 
 # (required) name of cloud provider: azure, aws, digitalocean, gcp, or none 
 cloud:
