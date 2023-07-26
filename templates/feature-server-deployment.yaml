@@ -127,7 +127,9 @@ spec:
             - name: HTTP_PORT
               value: {{ .Values.featureServer.httpPort | quote }}
             - name: JAMBONES_LOGLEVEL
-              value: debug
+              value: info
+            - name: JAMBONES_TTS_TRIM_SILENCE
+              value: "1"
             - name: VMD_HINTS_FILE
               value: /etc/voicemail-phraselist.json
             - name: JAMBONES_INJECT_CONTENT
