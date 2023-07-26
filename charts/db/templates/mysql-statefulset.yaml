@@ -28,8 +28,21 @@ spec:
           args:
             - "--ignore-db-dir=lost+found"
           env:
+            {{- if .Values.mysql.rootSecret }}
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_PWD # For healthcheck
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: MYSQL_ROOT_PASSWORD
+            {{- else }}
             - name: MYSQL_ALLOW_EMPTY_PASSWORD
               value: "yes"
+            {{- end }}
             - name: MYSQL_DATABASE
               value: {{ .Values.mysql.database }}
             - name: MYSQL_PASSWORD

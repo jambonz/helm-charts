@@ -80,7 +80,7 @@ spec:
           imagePullPolicy: {{ default "IfNotPresent" .Values.freeswitch.imagePullPolicy }}
           args:
           {{- range .Values.freeswitch.args }}
-            - {{ . }}
+            - {{ . | quote }}
           {{- end }}
           env: 
             - name: MOD_AUDIO_FORK_SUBPROTOCOL_NAME
