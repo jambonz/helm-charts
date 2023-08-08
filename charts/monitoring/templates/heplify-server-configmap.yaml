@@ -39,8 +39,8 @@ data:
     DBPartQos             = "6h"
     DBDropDays            = 14
     DBDropDaysCall        = 0
-    DBDropDaysRegister    = 0
-    DBDropDaysDefault     = 0
+    DBDropDaysRegister    = 1
+    DBDropDaysDefault     = 1
     DBDropOnStart         = false
     DBUsageProtection     = true
     DBUsageScheme         = "percentage"
