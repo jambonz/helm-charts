@@ -15,6 +15,13 @@ spec:
     metadata:
       labels:
         app: sbc-call-router
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.sbcCallRouter.podAnnotations }}
+        {{ toYaml .Values.sbcCallRouter.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.global.affinity }}
       affinity:

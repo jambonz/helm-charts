@@ -6,6 +6,15 @@ metadata:
 spec:
   template:
     spec:
+      template:
+        metadata:
+          annotations:
+            {{- if .Values.global.podAnnotations }}
+            {{ toYaml .Values.global.podAnnotations | default "" | nindent 12 }}
+            {{- end }}
+            {{- if .Values.cassandra.podAnnotations }}
+            {{ toYaml .Values.cassandra.podAnnotations | default "" | nindent 12 }}
+            {{- end }}
       restartPolicy: OnFailure
       containers:
       - name: cassandra-init-job

@@ -15,6 +15,13 @@ spec:
     metadata:
       labels:
         app: homer-webapp
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.homer.podAnnotations }}
+        {{ toYaml .Values.homer.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.affinity }}
       affinity:

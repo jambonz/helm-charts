@@ -8,11 +8,14 @@ mysql:
   # if empty, an empty password is used for the root user using MYSQL_ALLOW_EMPTY_PASSWORD
   rootSecret:
   secret: amFtYm9uZXM=
+  podAnnotations:
+
 # redis configuration used by Node.js app that need to connect
 redis: 
   image: redis:alpine
   host: redis 
   port: "6379"
+  podAnnotations:
 
 # Storage Class definition for the StatefulSet
 storageClassName:

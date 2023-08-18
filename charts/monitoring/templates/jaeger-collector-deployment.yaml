@@ -16,6 +16,13 @@ spec:
     metadata:
       labels:
         app: jaeger-collector
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.jaegerCollector.podAnnotations }}
+        {{ toYaml .Values.jaegerCollector.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       containers:
       - name: jaeger-collector

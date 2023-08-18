@@ -8,6 +8,14 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          annotations:
+            {{- if .Values.global.podAnnotations }}
+            {{ toYaml .Values.global.podAnnotations | default "" | nindent 12 }}
+            {{- end }}
+            {{- if .Values.apiban.podAnnotations }}
+            {{ toYaml .Values.apiban.podAnnotations | default "" | nindent 12 }}
+            {{- end }}
         spec:
           {{- if .Values.global.affinity }}
           affinity:

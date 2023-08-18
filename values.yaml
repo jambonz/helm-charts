@@ -22,6 +22,7 @@ global:
     accountCalls: "0"
     appCalls: "0"
   affinity:
+  podAnnotations:
     
 db: 
   # if true, create the db subchart
@@ -62,6 +63,7 @@ sbc:
       label: voip-environment 
       value: sip
     toleration: sip
+    podAnnotations:
     ssl:
       enabled: false
   rtp: 
@@ -69,6 +71,7 @@ sbc:
       label: voip-environment 
       value: rtp
     toleration: rtp
+    podAnnotations:
     storageClassName:
     # list of extra initContainers
     extraInitContainers:
@@ -132,12 +135,14 @@ mysql:
   user: jambones 
   # used when the rtp is in StatefulSet mode (sbc.rtp.statefulset.enabled is true)
   storage: 10Gi
+  podAnnotations:
 
 # redis configuration used by Node.js app that need to connect
 redis: 
   image: redis:alpine
   host: redis 
   port: "6379"
+  podAnnotations:
 
 # configuration for jambonz-api-server
 api: 
@@ -145,6 +150,7 @@ api:
   imagePullPolicy: Always
   httpPort: "3000"
   replicas: 1
+  podAnnotations:
   # (required) hostname for the jambonz port ingress
   hostname:
   # defaults to http, if you have tls enabled change to https 
@@ -156,6 +162,7 @@ webapp:
   image: jambonz/webapp:0.8.4-3
   imagePullPolicy: IfNotPresent
   replicas: 1
+  podAnnotations:
   
   # (required) hostname for the jambonz port ingress
   hostname: 
@@ -174,6 +181,7 @@ sbcInbound:
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
+  podAnnotations:
 
 # sbc-outbound configuration
 sbcOutbound: 
@@ -181,6 +189,7 @@ sbcOutbound:
   imagePullPolicy: IfNotPresent
   drachtioPort: "4000"
   replicas: 1
+  podAnnotations:
 
 # sbc-sip-sidecar configuration
 sbcSipSidecar:
@@ -204,6 +213,7 @@ featureServer:
   awsRegion: us-west-1
   replicas: 1
   otelSampleRate: 1.0
+  podAnnotations:
 
 # sbc-sip configuration
 sbcSip: 
@@ -220,3 +230,4 @@ apiban:
   redisKey: "apiban:ips"
   refreshInterval: "3600"
   foreverBlockRanges: "128.90.0.0/16,162.142.125.0/24,198.235.24.0/24,205.210.31.0/24"
+  podAnnotations:
