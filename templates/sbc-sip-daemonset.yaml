@@ -14,6 +14,13 @@ spec:
     metadata:
       labels:
         app: jambonz-sbc-sip
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.sbc.sip.podAnnotations }}
+        {{ toYaml .Values.sbc.sip.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.global.affinity }}
       affinity:

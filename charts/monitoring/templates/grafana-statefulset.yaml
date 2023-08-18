@@ -17,6 +17,13 @@ spec:
       name: grafana
       labels:
         app: grafana
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.grafana.podAnnotations }}
+        {{ toYaml .Values.grafana.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.affinity }}
       affinity:

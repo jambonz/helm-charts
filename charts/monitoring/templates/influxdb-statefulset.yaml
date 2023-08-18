@@ -17,6 +17,13 @@ spec:
       name: influxdb
       labels:
         app: influxdb
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.influxdb.podAnnotations }}
+        {{ toYaml .Values.influxdb.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.affinity }}
       affinity:

@@ -11,6 +11,12 @@ spec:
     metadata:
       annotations:
         sidecar.istio.io/inject: "false"
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.mysql.podAnnotations }}
+        {{ toYaml .Values.mysql.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       containers:
         - name: db 

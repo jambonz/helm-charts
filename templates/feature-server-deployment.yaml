@@ -17,6 +17,13 @@ spec:
     metadata:
       labels:
         app: feature-server
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.featureServer.podAnnotations }}
+        {{ .Values.featureServer.podAnnotations | toYaml | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.global.affinity }}
       affinity:

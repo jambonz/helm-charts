@@ -17,6 +17,13 @@ spec:
     metadata:
       labels:
         app: cassandra
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.cassandra.podAnnotations }}
+        {{ toYaml .Values.cassandra.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.affinity }}
       affinity:

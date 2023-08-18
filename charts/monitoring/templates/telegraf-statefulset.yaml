@@ -17,6 +17,13 @@ spec:
       name: telegraf
       labels:
         app: telegraf
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.telegraf.podAnnotations }}
+        {{ toYaml .Values.telegraf.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.affinity }}
       affinity:

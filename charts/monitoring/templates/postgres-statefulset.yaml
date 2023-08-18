@@ -17,6 +17,13 @@ spec:
       name: postgres
       labels:
         app: postgres
+      annotations:
+        {{- if .Values.global.podAnnotations }}
+        {{ toYaml .Values.global.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
+        {{- if .Values.postgres.podAnnotations }}
+        {{ toYaml .Values.postgres.podAnnotations | default "" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.affinity }}
       affinity:
