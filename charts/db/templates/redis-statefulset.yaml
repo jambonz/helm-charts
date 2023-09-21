@@ -29,6 +29,10 @@ spec:
       affinity:
         {{ toYaml .Values.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.redis.nodeSelector }}
+      nodeSelector:
+        {{ .Values.redis.nodeSelector.label }}: {{ .Values.redis.nodeSelector.value | quote }}      
+      {{- end }}
       containers:
         - name: redis 
           image: {{ .Values.redis.image }}

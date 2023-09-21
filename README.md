@@ -222,6 +222,10 @@ helm uninstall -n <namespace> <release-name>
 |db.enabled|if true, install the db sub-chart|true|
 |db.affinity|set the affinity structure for the db subchart resources||
 |db.storageClassName|set the `storageClassName` for the db subchart StatefulSet resources||
+|db.mysql.nodeSelector.label| optional Node Selector Label for mysql and db-create ||
+|db.mysql.nodeSelector.value| optional Node Selector Value for mysql and db-create ||
+|db.redis.nodeSelector.label| optional Node Selector Label for redis ||
+|db.redis.nodeSelector.value| optional Node Selector Value for redis ||
 |monitoring.enabled|if true, install the monitoring sub-chart|true|
 |monitoring.affinity|set the affinity structure for the monitoring subchart resources||
 |monitoring.storageClassName|set the `storageClassName` for the monitoring subchart StatefulSet resources||

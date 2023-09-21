@@ -18,6 +18,10 @@ spec:
         {{ toYaml .Values.mysql.podAnnotations | default "" | nindent 8 }}
         {{- end }}
     spec:
+      {{- if .Values.mysql.nodeSelector }}
+      nodeSelector:
+        {{ .Values.mysql.nodeSelector.label }}: {{ .Values.mysql.nodeSelector.value | quote }}      
+      {{- end }}
       containers:
         - name: db 
           image: jambonz/db-create:0.8.4
