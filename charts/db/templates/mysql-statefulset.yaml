@@ -29,6 +29,10 @@ spec:
       affinity:
         {{ toYaml .Values.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.mysql.nodeSelector }}
+      nodeSelector:
+        {{ .Values.mysql.nodeSelector.label }}: {{ .Values.mysql.nodeSelector.value | quote }}      
+      {{- end }}
       containers:
         - name: mysql 
           image: {{ .Values.mysql.image }}

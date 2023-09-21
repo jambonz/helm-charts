@@ -27,6 +27,10 @@ spec:
       affinity:
         {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.sbcInbound.nodeSelector }}
+      nodeSelector:
+        {{ .Values.sbcInbound.nodeSelector.label }}: {{ .Values.sbcInbound.nodeSelector.value | quote }}      
+      {{- end }}   
       containers:
         - name: sbc-inbound
           image: {{ .Values.sbcInbound.image }}

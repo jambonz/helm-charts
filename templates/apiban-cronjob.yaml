@@ -21,6 +21,10 @@ spec:
           affinity:
             {{ toYaml .Values.global.affinity | default "" | nindent 12 }}
           {{- end }}
+          {{- if .Values.apiban.nodeSelector }}
+          nodeSelector:
+            {{ .Values.apiban.nodeSelector.label }}: {{ .Values.apiban.nodeSelector.value | quote }}      
+          {{- end }}
           containers:
           - name: apiban-redis
             image: jambonz/apiban-redis:latest

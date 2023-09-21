@@ -222,6 +222,10 @@ helm uninstall -n <namespace> <release-name>
 |db.enabled|if true, install the db sub-chart|true|
 |db.affinity|set the affinity structure for the db subchart resources||
 |db.storageClassName|set the `storageClassName` for the db subchart StatefulSet resources||
+|db.mysql.nodeSelector.label| optional Node Selector Label for mysql and db-create ||
+|db.mysql.nodeSelector.value| optional Node Selector Value for mysql and db-create ||
+|db.redis.nodeSelector.label| optional Node Selector Label for redis ||
+|db.redis.nodeSelector.value| optional Node Selector Value for redis ||
 |monitoring.enabled|if true, install the monitoring sub-chart|true|
 |monitoring.affinity|set the affinity structure for the monitoring subchart resources||
 |monitoring.storageClassName|set the `storageClassName` for the monitoring subchart StatefulSet resources||
@@ -242,6 +246,12 @@ helm uninstall -n <namespace> <release-name>
 |sbc.rtp.extraVolumes|list of volumes to add to the sbc-rtp definition of volumes||
 |sbc.rtp.statefulset.enabled|use a StatefulSet instead of DaemonSet for the sbc-rtp|`false`|
 |sbc.rtp.statefulset.replicas|number of replicas for the StatefulSet|`1`|
+|sbcCallRouter.nodeSelector.label| optional Node Selector Label for sbc-call-router ||
+|sbcCallRouter.nodeSelector.value| optional Node Selector Value for sbc-call-router ||
+|sbcInbound.nodeSelector.label| optional Node Selector Label for sbc-inbound ||
+|sbcInbound.nodeSelector.value| optional Node Selector Value for sbc-inbound ||
+|sbcOutbound.nodeSelector.label| optional Node Selector Label for sbc-outbound ||
+|sbcOutbound.nodeSelector.value| optional Node Selector Value for sbc-outbound ||
 |stats.enabled|if set, jambonz apps write stats to telegraf|"1"|
 |stats.host|telegraf service name|"telegraf"|
 |stats.port|telegraf service listening port|"8125"|
@@ -280,9 +290,15 @@ helm uninstall -n <namespace> <release-name>
 |api.imagePullPolicy|jambonz-api-server image pull policy|"Always"|
 |api.httpPort|http port to listen on|"3000"|
 |api.hostname|(required) FQDN for api ingress controller|""|
+|api.nodeSelector.label| optional Node Selector Label for api-server ||
+|api.nodeSelector.value| optional Node Selector Value for api-server ||
+|apiban.nodeSelector.label| optional Node Selector Label for apiban ||
+|apiban.nodeSelector.value| optional Node Selector Value for apiban ||
 |webapp.image|jambonz webapp image|jambonz/webapp:latest|
 |webapp.imagePullPolicy|jambonz webapp image pull policy|"Always"|
 |webapp.hostname|(required ) FQDN for webapp ingress controller|""|
+|webapp.nodeSelector.label| optional Node Selector Label for webapp ||
+|webapp.nodeSelector.value| optional Node Selector Value for webapp ||
 |sbcInbound.image|sbc-inbound image|jambonz/sbc-inbound:latest|
 |sbcInbound.imagePullPolicy|sbc-inbound image pull policy|"Always"|
 |sbcOutbound.drachtioPort|port to listen on for outbound connections from drachtio|"4000"|
@@ -297,6 +313,8 @@ helm uninstall -n <namespace> <release-name>
 |featureServer.image|feature-server image|jambonz/feature-server:latest|
 |featureServer.imagePullPolicy|feature-server image pull policy|"Always"|
 |featureServer.httpPort|port to listen on for api requests|"3000"|
+|featureServer.nodeSelector.label| optional Node Selector Label for feature-server ||
+|featureServer.nodeSelector.value| optional Node Selector Value for feature-server ||
 |feature.drachtioConnection|drachtio connection information|"localhost:9022:cymru"|
 |feature.freeswitchConnection|freeswitch connection information|"localhost:8021:JambonzR0ck$"|
 |sbcSip.loglevel|drachtio loglevel in sbc sip container, should be info or debug|"info"|

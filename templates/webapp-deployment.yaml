@@ -27,6 +27,10 @@ spec:
       affinity:
         {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.webapp.nodeSelector }}
+      nodeSelector:
+        {{ .Values.webapp.nodeSelector.label }}: {{ .Values.webapp.nodeSelector.value | quote }}      
+      {{- end }}
       containers:
         - env:
             - name: NODE_ENV

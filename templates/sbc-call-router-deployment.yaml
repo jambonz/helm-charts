@@ -27,6 +27,10 @@ spec:
       affinity:
         {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.sbcCallRouter.nodeSelector }}
+      nodeSelector:
+        {{ .Values.sbcCallRouter.nodeSelector.label }}: {{ .Values.sbcCallRouter.nodeSelector.value | quote }}      
+      {{- end }}
       containers:
         - name: sbc-call-router
           image: {{ .Values.sbcCallRouter.image }}
