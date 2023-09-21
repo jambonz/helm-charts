@@ -27,6 +27,10 @@ spec:
       affinity:
         {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.api.nodeSelector }}
+      nodeSelector:
+        {{ .Values.api.nodeSelector.label }}: {{ .Values.api.nodeSelector.value | quote }}      
+      {{- end }}
       initContainers:
         - image: kanisterio/mysql-sidecar:0.40.0
           name: db-create-wait

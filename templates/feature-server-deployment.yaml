@@ -29,6 +29,10 @@ spec:
       affinity:
         {{ toYaml .Values.global.affinity | default "" | nindent 8 }}
       {{- end }}
+      {{- if .Values.featureServer.nodeSelector }}
+      nodeSelector:
+        {{ .Values.featureServer.nodeSelector.label }}: {{ .Values.featureServer.nodeSelector.value | quote }}      
+      {{- end }}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
