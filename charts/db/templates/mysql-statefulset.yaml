@@ -43,12 +43,12 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secrets
+                  name: db-secrets
                   key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_PWD # For healthcheck
               valueFrom:
                 secretKeyRef:
-                  name: secrets
+                  name: db-secrets
                   key: MYSQL_ROOT_PASSWORD
             {{- else }}
             - name: MYSQL_ALLOW_EMPTY_PASSWORD
@@ -59,7 +59,7 @@ spec:
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secrets
+                  name: db-secrets
                   key: MYSQL_PASSWORD
             - name: MYSQL_USER
               value: {{ .Values.mysql.user }}

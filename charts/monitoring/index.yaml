@@ -2,7 +2,28 @@ apiVersion: v1
 entries:
   monitoring:
   - apiVersion: v2
-    created: "2023-08-08T07:55:43.016451-04:00"
+    created: "2023-11-11T10:52:44.909994-05:00"
+    description: A grafana-based monitoring service for jambonz
+    digest: 8e2e634d9b10bf305450a7859210cba610e49ab0fb784397bf2740f14f2e393f
+    home: https://jambonz.org
+    keywords:
+    - voip
+    - cpaas
+    - webRTC
+    - sip
+    - rtp
+    maintainers:
+    - email: daveh@drachtio.org
+      name: Dave Horton
+    name: monitoring
+    sources:
+    - https://github.com/jambonz/helm-charts
+    - https://github.com/jambonz/jambonz-infrastructure
+    urls:
+    - monitoring-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    created: "2023-11-11T10:52:44.907879-05:00"
     description: A grafana-based monitoring service for jambonz
     digest: 82f5ef89569035c61d542f2cfa72a0ddbc6ebdd1313063e0b44385be751d0f02
     home: https://jambonz.org
@@ -23,7 +44,7 @@ entries:
     - monitoring-0.1.7.tgz
     version: 0.1.7
   - apiVersion: v2
-    created: "2023-08-08T07:55:43.015147-04:00"
+    created: "2023-11-11T10:52:44.906611-05:00"
     description: A grafana-based monitoring service for jambonz
     digest: 68b9492e7863e5c95806cb2340a786f4c5685725d3723b4cd902b5085a5e17aa
     home: https://jambonz.org
@@ -44,7 +65,7 @@ entries:
     - monitoring-0.1.6.tgz
     version: 0.1.6
   - apiVersion: v2
-    created: "2023-08-08T07:55:43.014084-04:00"
+    created: "2023-11-11T10:52:44.905625-05:00"
     description: A grafana-based monitoring service for jambonz
     digest: 2c09c76937b2145f0062d918c063534d985aad312fe27f61f52e584aa47404c9
     home: https://jambonz.org
@@ -65,7 +86,7 @@ entries:
     - monitoring-0.1.5.tgz
     version: 0.1.5
   - apiVersion: v2
-    created: "2023-08-08T07:55:43.01314-04:00"
+    created: "2023-11-11T10:52:44.90473-05:00"
     description: A grafana-based monitoring service for jambonz
     digest: 7a6ea9d8d2835e9f61b5f5f57d3dace8f85c743854e77742e9a8b38b0d4cf903
     home: https://jambonz.org
@@ -85,4 +106,4 @@ entries:
     urls:
     - monitoring-0.1.4.tgz
     version: 0.1.4
-generated: "2023-08-08T07:55:43.011875-04:00"
+generated: "2023-11-11T10:52:44.903896-05:00"

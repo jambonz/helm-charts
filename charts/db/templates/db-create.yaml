@@ -24,7 +24,7 @@ spec:
       {{- end }}
       containers:
         - name: db 
-          image: jambonz/db-create:0.8.4
+          image: jambonz/db-create:0.8.5
           env:
             - name: JAMBONES_MYSQL_HOST
               value: {{ .Values.mysql.host }}
@@ -35,7 +35,7 @@ spec:
             - name: JAMBONES_MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secrets
+                  name: db-secrets
                   key: MYSQL_PASSWORD
           imagePullPolicy: Always
       restartPolicy: OnFailure
