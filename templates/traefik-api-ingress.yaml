@@ -1,0 +1,61 @@
+{{- if .Values.global.traefik.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-webapp
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "common.labels" . | indent 4 }}
+  {{- if .Values.global.traefik.tls.enabled }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: {{ .Values.global.traefik.tls.clusterIssuer }}
+  {{- end}}
+spec:
+
+{{- if .Values.global.traefik.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ .Values.api.hostname }}
+    secretName: jambonz-api-tls
+  - hosts:
+    - {{ .Values.webapp.hostname }}
+    secretName: jambonz-webapp-tls
+{{- end}}
+  rules:      
+    - http:
+        paths:
+        {{- if .Values.global.traefik.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /api
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name:  api-server
+                port:
+                  number: {{ .Values.api.httpPort }}
+      {{- if .Values.global.traefik.useHostnames }}
+      host: {{ required "hostname for REST API" .Values.api.hostname }}
+      {{- end}}
+
+    - http:
+        paths:
+        {{- if .Values.global.traefik.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /webapp
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: webapp
+                port:
+                  number: 3001
+      {{- if .Values.global.traefik.useHostnames }}
+      host: {{ required "hostname for webapp" .Values.webapp.hostname }}
+      {{- end}}
+
+{{- end}}

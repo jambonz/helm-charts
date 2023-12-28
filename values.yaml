@@ -13,6 +13,12 @@ global:
     tls:
       enabled: false
       clusterIssuer: 
+  traefik:
+    enabled: false
+    useHostnames: true
+    tls:
+      enabled: false
+      clusterIssuer: 
   cassandra:
     enabled: true
   recordings:

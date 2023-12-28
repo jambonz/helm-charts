@@ -1,0 +1,86 @@
+{{- if .Values.global.traefik.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-gateway-monitoring
+  namespace: {{ dig "global" "monitoring" "namespace" .Release.Namespace (.Values | merge (dict)) | quote }}
+  annotations:
+    {{- if .Values.global.traefik.tls.enabled }}
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: {{ .Values.global.traefik.tls.clusterIssuer }}
+    {{- end}}
+  labels:
+{{ include "common.labels" . | indent 4 }}
+spec:
+  rules:
+    - http:
+        paths:
+        {{- if .Values.global.traefik.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /grafana
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+      {{- if .Values.global.traefik.useHostnames }}
+      host: {{ required "hostname for Grafana" .Values.grafana.hostname }}
+      {{- end}}
+      
+    - http:
+        paths:
+        {{- if .Values.global.traefik.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /homer
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: homer-webapp
+                port:
+                  number: 80
+      {{- if .Values.global.traefik.useHostnames }}
+      host: {{ required "hostname for Homer" .Values.homer.hostname }}
+      {{- end}}
+
+    - http:
+        paths:
+        {{- if .Values.global.traefik.useHostnames }}
+          - path: /
+        {{else}}
+          - path: /jaeger
+        {{- end}}
+            pathType: Prefix
+            backend:
+              service:
+                name: jaeger
+                port:
+                  number: 16686
+      {{- if .Values.global.traefik.useHostnames }}
+      host: {{ required "hostname for jaeger" .Values.jaeger.hostname }}
+      {{- end}}
+
+{{- if .Values.global.traefik.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ .Values.grafana.hostname }}
+    secretName: monitoring-grafana-tls
+  - hosts:
+    - {{ .Values.homer.hostname }}
+    secretName: monitoring-homer-tls
+  - hosts:
+    - {{ .Values.jaeger.hostname }}
+    secretName: monitoring-jaeger-tls
+{{- end}}
+
+{{- end}}
+      
+          
+          
+
+
