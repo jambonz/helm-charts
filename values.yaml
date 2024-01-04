@@ -107,7 +107,7 @@ rtpengine:
   sidecarImage: jambonz/rtpengine-sidecar:0.8.5
   sidecarImagePullPolicy: Always
   dtmfLogPort:  "22223"
-  loglevel: "7"
+  loglevel: "5"
   homerId: "11"
   # used when global.recordings.enabled is true
   recordings:
