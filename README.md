@@ -315,10 +315,12 @@ helm uninstall -n <namespace> <release-name>
 |featureServer.httpPort|port to listen on for api requests|"3000"|
 |featureServer.nodeSelector.label| optional Node Selector Label for feature-server ||
 |featureServer.nodeSelector.value| optional Node Selector Value for feature-server ||
+|featureServer.drachtio.loglevel| drachtio loglevel for drachtio container in feature-server deployment, should be info or debug (can also be notice, warning, error) |"info"|
+|featureServer.drachtio.sofiaLoglevel| sofia-sip log level for drachtio container in feature-server deployment, should be 1-9 (can also be 0)|"3"|
 |feature.drachtioConnection|drachtio connection information|"localhost:9022:cymru"|
 |feature.freeswitchConnection|freeswitch connection information|"localhost:8021:JambonzR0ck$"|
-|sbcSip.loglevel|drachtio loglevel in sbc sip container, should be info or debug|"info"|
-|sbcSip.sofiaLogLevel|sofia-sip log level for drachtio in sbc sip container, should be 1-9|"3|
+|sbcSip.loglevel|drachtio loglevel in sbc sip container, should be info or debug (can also be notice, warning, error)|"info"|
+|sbcSip.sofiaLogLevel|sofia-sip log level for drachtio in sbc sip container, should be 1-9 (can also be 0)|"3|
 |dbWaiter.image|image of sidecar mysql client app to use for testing database readiness|d3fk/kubectl:v1.18|
 
 
