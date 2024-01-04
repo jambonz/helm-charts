@@ -220,6 +220,9 @@ featureServer:
   replicas: 1
   otelSampleRate: 1.0
   podAnnotations:
+  drachtio:
+    loglevel: info
+    sofiaLoglevel: "3"
 
 # sbc-sip configuration
 sbcSip: 
