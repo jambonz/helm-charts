@@ -307,6 +307,9 @@ helm uninstall -n <namespace> <release-name>
 |sbcOutbound.drachtioPort|port to listen on for outbound connections from drachtio|"4000"|
 |sbcSipSidecar.image|sbc-sip-sidecar image|jambonz/sbc-sip-sidecar:latest|
 |sbcSipSidecar.imagePullPolicy|sbc-sip-sidecar image pull policy|"Always"|
+|sbcSipSidecar.loglevel|sbc-sip-sidecar log level |"info"|
+|sbcSipSidecar.outboundRegister.minExpiresInterval| minimum expires interval for outbound registrations (in seconds) | 30|
+|sbcSipSidecar.outboundRegister.defaultExpiresInterval| default expires interval for outbound registrations (in seconds). Will be applied if the server does not provide its own expire data, or if the data provided is smaller than the minimum expires interval | 3600 |
 |sbcCallRouter.image|sbc-call-router image|jambonz/sbc-call-router:latest|
 |sbcCallRouter.imagePullPolicy|sbc-call-router image pull policy|"Always"|
 |sbcCallRouter.drachtioPort|port to listen on for http connections from drachtio|"3000"|

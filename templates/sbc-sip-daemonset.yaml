@@ -131,7 +131,7 @@ spec:
             - name: JAMBONES_REGBOT_CONTACT_USE_IP
               value: "1"
             - name: JAMBONES_LOGLEVEL
-              value: info
+              value: {{ .Values.sbcSipSidecar.loglevel }}
             - name: JAMBONES_REDIS_HOST
               value: redis.{{ default .Release.Namespace .Values.global.db.namespace }}
             - name: JAMBONES_REDIS_PORT
@@ -190,6 +190,10 @@ spec:
                 secretKeyRef:
                   name: jambonz-secrets
                   key: JWT_SECRET
+            - name: JAMBONES_REGBOT_MIN_EXPIRES_INTERVAL
+              value: {{ .Values.sbcSipSidecar.outboundRegister.minExpiresInterval | quote }}
+            - name: JAMBONES_REGBOT_DEFAULT_EXPIRES_INTERVAL
+              value: {{ .Values.sbcSipSidecar.outboundRegister.defaultExpiresInterval | quote }}
         - name: smpp
           image: {{ .Values.smpp.image }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.smpp.imagePullPolicy }} 

@@ -201,6 +201,10 @@ sbcOutbound:
 sbcSipSidecar:
   image: jambonz/sbc-sip-sidecar:0.8.5
   imagePullPolicy: IfNotPresent
+  loglevel: info
+  outboundRegister:
+    minExpiresInterval: 30
+    defaultExpiresInterval: 3600
 
 # sbc-call-router configuration
 sbcCallRouter: 
